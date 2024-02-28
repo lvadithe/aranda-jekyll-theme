@@ -115,7 +115,7 @@
 
                 // Elimina bloques if sin comentarios (ejemplo simple)
                 const sanitizedWithoutIf = sanitizedWithoutIfComments.replace(
-                    /<div class="if-block"[^<]*(?:(?!<\/div>)<[^<]*)*<\/div>/gi,
+                    /<[^>]*class="if-block"[^>]*>[^<]*(?:(?![<\/div>])<[^<]*)*<\/div>/gi,
                     ""
                 );
 
