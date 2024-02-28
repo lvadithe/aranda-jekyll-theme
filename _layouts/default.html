@@ -31,7 +31,7 @@
                     // Obtén el contenido HTML de la etiqueta
                     const contentElement =
                         document.getElementById("translatedContent");
-                    const htmlContent = contentElement.innerHTML;
+                    const htmlContent = contentElement.textContent.trim();
                     console.log("Contenido original:", htmlContent);
 
                     // Elimina scripts y otros elementos no esenciales
