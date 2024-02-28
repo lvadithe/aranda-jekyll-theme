@@ -8,7 +8,27 @@
         <div class="sg-pusher" id="translatedContent">
             {% include sidebar.html %}
             <main id="sgMain" class="sg-main">
-                {{ content }}
+                <div
+                    style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        padding: 20px;
+                    "
+                >
+                    <div id="languageSelector">
+                        <label for="language">Seleccionar idioma:</label>
+                        <select id="language">
+                            <option value="es">Español</option>
+                            <option value="en">Inglés</option>
+                            <option value="pt">Portugués</option>
+                            <!-- Agrega más opciones según tus necesidades -->
+                        </select>
+                        <button onclick="translateText()">Traducir</button>
+                    </div>
+                    {{ content }}
+                </div>
+
                 <!-- {% include footer.html %} -->
             </main>
         </div>
