@@ -23,40 +23,46 @@
         console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
-            // Temporalmente, cambiar <img> a <img_translate>
-            const sanitizedHTML = originalHTML.replace(
-                /<img\b[^>]*>/g,
-                (match) => match.replace("<img", "<img_translate")
+            // Dividir el HTML en segmentos de texto e imágenes
+            const segments = originalHTML.split(/(<img\b[^>]*>)/g);
+
+            // Traducir solo los segmentos de texto
+            const translatedSegments = await Promise.all(
+                segments.map(async (segment) => {
+                    if (segment.startsWith("<img")) {
+                        // Mantener la etiqueta de imagen sin traducción
+                        return segment;
+                    } else {
+                        // Traducir el segmento de texto
+                        const response = await fetch(
+                            `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Ocp-Apim-Subscription-Key":
+                                        subscriptionKey,
+                                },
+                                body: JSON.stringify([{ text: segment }]),
+                            }
+                        );
+
+                        if (!response.ok) {
+                            throw new Error(
+                                "Error en la solicitud de traducción"
+                            );
+                        }
+
+                        const result = await response.json();
+                        return result[0].translations[0].text;
+                    }
+                })
             );
 
-            const response = await fetch(
-                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Ocp-Apim-Subscription-Key": subscriptionKey,
-                    },
-                    body: JSON.stringify([{ text: sanitizedHTML }]),
-                }
-            );
+            // Reemplazar el contenido con los segmentos traducidos
+            contentElement.innerHTML = translatedSegments.join("");
 
-            if (!response.ok) {
-                throw new Error("Error en la solicitud de traducción");
-            }
-
-            const result = await response.json();
-            console.log("Resultado de la traducción:", result);
-
-            // Restaurar las etiquetas <img> en el contenido traducido
-            const restoredHTML = result[0].translations[0].text.replace(
-                /<img_translate\b[^>]*>/g,
-                (match) => match.replace("<img_translate", "<img")
-            );
-
-            contentElement.innerHTML = restoredHTML;
-
-            console.log("HTML traducido:", restoredHTML);
+            console.log("HTML traducido:", contentElement.innerHTML);
         } catch (error) {
             console.error("Error:", error.message);
         }
