@@ -23,10 +23,10 @@
         console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
-            // Excluir las etiquetas <img> de la traducción
+            // Temporalmente, cambiar <img> a <img_translate>
             const sanitizedHTML = originalHTML.replace(
                 /<img\b[^>]*>/g,
-                (match) => `<!--${match}-->`
+                (match) => match.replace("<img", "<img_translate")
             );
 
             const response = await fetch(
@@ -50,13 +50,8 @@
 
             // Restaurar las etiquetas <img> en el contenido traducido
             const restoredHTML = result[0].translations[0].text.replace(
-                /<!--([^>]+)-->/g,
-                (match, imgTag) => {
-                    if (imgTag && imgTag.toLowerCase().includes("<img")) {
-                        return imgTag;
-                    }
-                    return match;
-                }
+                /<img_translate\b[^>]*>/g,
+                (match) => match.replace("<img_translate", "<img")
             );
 
             contentElement.innerHTML = restoredHTML;
