@@ -19,10 +19,7 @@ layout: default
                     <div id="search_result"></div>
                 </div>-->
                 {% if site.title != "Aranda Database" %}
-                <div
-                    class="col-auto"
-                    style="padding: 20px; background-color: red"
-                >
+                <div class="col-auto">
                     <div class="pdf">
                         <a
                             id="convertPDF"
@@ -38,6 +35,16 @@ layout: default
                             />
                             <h1>Descargar PDF</h1>
                         </a>
+                    </div>
+                    <div id="languageSelector">
+                        <label for="language">Seleccionar idioma:</label>
+                        <select id="language">
+                            <option value="en">Inglés</option>
+                            <option value="es">Español</option>
+                            <option value="pt">Portugués</option>
+                            <!-- Agrega más opciones según tus necesidades -->
+                        </select>
+                        <button onclick="translateText()">Traducir</button>
                     </div>
                 </div>
                 {% endif %}
@@ -70,17 +77,6 @@ layout: default
         {{ content }}
     </div>
 </article>
-
-<div id="languageSelector">
-    <label for="language">Seleccionar idioma:</label>
-    <select id="language">
-        <option value="en">Inglés</option>
-        <option value="es">Español</option>
-        <option value="es">Portugués</option>
-        <!-- Agrega más opciones según tus necesidades -->
-    </select>
-    <button onclick="translateText()">Traducir</button>
-</div>
 
 <script>
     // Función para traducir el contenido del elemento con id "translatedContent"
