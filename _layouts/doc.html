@@ -48,9 +48,7 @@ layout: default
 
             <!--Buscador Aranda docs-->
             <!-- <div id="no-results"><p class="item-title">No hay resultados para la busqueda </p></div> -->
-            <div class="title header typo_ostrich" class="translatedContent">
-                {{ page.title }}
-            </div>
+            <div class="title header typo_ostrich">{{ page.title }}</div>
             {% if page.info %}
             <div class="sub_title typo_crow">{{ page.info }}</div>
             {% endif %}
@@ -65,7 +63,7 @@ layout: default
 </header>
 
 <article id="documentationArea" class="sg_doc">
-    <div class="translatedContent" class="sg_contain" id="article-content">
+    <div id="translatedContent" class="sg_contain" id="article-content">
         {{ content }}
     </div>
 </article>

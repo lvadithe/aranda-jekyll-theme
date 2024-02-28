@@ -23,8 +23,6 @@
         console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
-            const sanitizedHTML = originalHTML.replace(/<img\b[^>]*>/gi, ""); // Elimina las etiquetas <img>
-
             const response = await fetch(
                 `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
                 {
@@ -33,7 +31,7 @@
                         "Content-Type": "application/json",
                         "Ocp-Apim-Subscription-Key": subscriptionKey,
                     },
-                    body: JSON.stringify([{ text: sanitizedHTML }]),
+                    body: JSON.stringify([{ text: originalHTML }]),
                 }
             );
 
