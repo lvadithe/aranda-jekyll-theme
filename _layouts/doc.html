@@ -39,8 +39,8 @@ layout: default
                     <div id="languageSelector">
                         <label for="language">Seleccionar idioma:</label>
                         <select id="language">
-                            <option value="en">Inglés</option>
                             <option value="es">Español</option>
+                            <option value="en">Inglés</option>
                             <option value="pt">Portugués</option>
                             <!-- Agrega más opciones según tus necesidades -->
                         </select>
@@ -73,53 +73,7 @@ layout: default
 </header>
 
 <article id="documentationArea" class="sg_doc">
-    <div id="translatedContent" class="sg_contain" id="article-content">
-        {{ content }}
-    </div>
+    <div class="sg_contain" id="article-content">{{ content }}</div>
 </article>
 
-<script>
-    // Función para traducir el contenido del elemento con id "translatedContent"
-    async function translateText() {
-        const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
-        const endpoint = "https://api.cognitive.microsofttranslator.com/";
-        const version = "3.0";
-
-        // Obtener el contenido actual del elemento
-        const contentElement = document.getElementById("translatedContent");
-        const textToTranslate = contentElement.innerText;
-
-        // Obtener el idioma seleccionado del selector
-        const selectedLanguage = document.getElementById("language").value;
-
-        console.log("Texto original:", textToTranslate);
-        console.log("Idioma seleccionado:", selectedLanguage);
-        try {
-            const response = await fetch(
-                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Ocp-Apim-Subscription-Key": subscriptionKey,
-                    },
-                    body: JSON.stringify([{ text: textToTranslate }]),
-                }
-            );
-
-            if (!response.ok) {
-                throw new Error("Error en la solicitud de traducción");
-            }
-
-            const result = await response.json();
-            console.log("Resultado de la traducción:", result);
-
-            // Actualizar el contenido del elemento con la traducción
-            contentElement.innerText = result[0].translations[0].text;
-
-            console.log("Texto traducido:", result[0].translations[0].text);
-        } catch (error) {
-            console.error("Error:", error.message);
-        }
-    }
-</script>
+<script></script>
