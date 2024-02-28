@@ -15,7 +15,7 @@
 
         // Obtener el contenido actual del elemento
         const contentElement = document.getElementById("translatedContent");
-        const textToTranslate = contentElement.innerText;
+        const textToTranslate = contentElement.innerHTML;
 
         // Obtener el idioma seleccionado del selector
         const selectedLanguage = document.getElementById("language").value;
@@ -43,7 +43,7 @@
             console.log("Resultado de la traducción:", result);
 
             // Actualizar el contenido del elemento con la traducción
-            contentElement.innerText = result[0].translations[0].text;
+            contentElement.innerHTML = result[0].translations[0].text;
 
             console.log("Texto traducido:", result[0].translations[0].text);
         } catch (error) {
