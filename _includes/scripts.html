@@ -51,8 +51,14 @@
             // Restaurar las etiquetas <img> en el contenido traducido
             const restoredHTML = result[0].translations[0].text.replace(
                 /<!--([^>]+)-->/g,
-                "$1"
+                (match, imgTag) => {
+                    if (imgTag && imgTag.toLowerCase().includes("<img")) {
+                        return imgTag;
+                    }
+                    return match;
+                }
             );
+
             contentElement.innerHTML = restoredHTML;
 
             console.log("HTML traducido:", restoredHTML);
