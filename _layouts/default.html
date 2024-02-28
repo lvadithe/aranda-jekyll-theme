@@ -100,14 +100,26 @@
 
             // Función para eliminar scripts y otros elementos no esenciales
             function sanitizeContent(htmlContent) {
-                // Implementa la lógica para eliminar scripts u otros elementos no esenciales
-                // Por ejemplo, puedes usar regex o una librería de manipulación de HTML
-                // Aquí hay un ejemplo simple que elimina scripts:
-                const sanitizedContent = htmlContent.replace(
+                // Elimina scripts
+                const sanitizedWithoutScripts = htmlContent.replace(
                     /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
                     ""
                 );
-                return sanitizedContent;
+
+                // Elimina bloques if (comentarios)
+                const sanitizedWithoutIfComments =
+                    sanitizedWithoutScripts.replace(
+                        /<!--\[if.*?\]>([\s\S]*?)<!\[endif\]-->/g,
+                        ""
+                    );
+
+                // Elimina bloques if sin comentarios (ejemplo simple)
+                const sanitizedWithoutIf = sanitizedWithoutIfComments.replace(
+                    /<div class="if-block"[^<]*(?:(?!<\/div>)<[^<]*)*<\/div>/gi,
+                    ""
+                );
+
+                return sanitizedWithoutIf;
             }
         </script>
     </body>
