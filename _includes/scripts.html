@@ -5,64 +5,70 @@
 <script src="{{ site.baseurl }}/assets/js/libs/iframeResizer.min.js"></script>
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
-
 <script>
-    // Función para traducir el contenido del elemento con id "translatedContent"
+    // Función para traducir el contenido de elementos con la clase especificada
     async function translateText() {
         const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
         const endpoint = "https://api.cognitive.microsofttranslator.com/";
         const version = "3.0";
 
-        // Obtener el contenido actual del elemento
-        const contentElements = document.getElementsByClassName("translatedContent");
-        const originalHTML = contentElement.innerHTML;
+        // Clase de elementos a traducir
+        const elementClass = "translatedContent";
 
         // Obtener el idioma seleccionado del selector
         const selectedLanguage = document.getElementById("language").value;
 
-        console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
-            // Dividir el HTML en segmentos de texto e imágenes
-            const segments = originalHTML.split(/(<img\b[^>]*>)/g);
+            // Obtener una lista de elementos con la clase especificada
+            const elements = document.getElementsByClassName(elementClass);
 
-            // Traducir solo los segmentos de texto
-            const translatedSegments = await Promise.all(
-                segments.map(async (segment) => {
-                    if (segment.startsWith("<img")) {
-                        // Mantener la etiqueta de imagen sin traducción
-                        return segment;
-                    } else {
-                        // Traducir el segmento de texto
-                        const response = await fetch(
-                            `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                            {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Ocp-Apim-Subscription-Key":
-                                        subscriptionKey,
-                                },
-                                body: JSON.stringify([{ text: segment }]),
-                            }
-                        );
+            // Iterar sobre los elementos y traducir su contenido
+            for (const contentElement of elements) {
+                const originalHTML = contentElement.innerHTML;
+                console.log("HTML original:", originalHTML);
 
-                        if (!response.ok) {
-                            throw new Error(
-                                "Error en la solicitud de traducción"
+                // Dividir el HTML en segmentos de texto e imágenes
+                const segments = originalHTML.split(/(<img\b[^>]*>)/g);
+
+                // Traducir solo los segmentos de texto
+                const translatedSegments = await Promise.all(
+                    segments.map(async (segment) => {
+                        if (segment.startsWith("<img")) {
+                            // Mantener la etiqueta de imagen sin traducción
+                            return segment;
+                        } else {
+                            // Traducir el segmento de texto
+                            const response = await fetch(
+                                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Ocp-Apim-Subscription-Key":
+                                            subscriptionKey,
+                                    },
+                                    body: JSON.stringify([{ text: segment }]),
+                                }
                             );
+
+                            if (!response.ok) {
+                                throw new Error(
+                                    "Error en la solicitud de traducción"
+                                );
+                            }
+
+                            const result = await response.json();
+                            return result[0].translations[0].text;
                         }
+                    })
+                );
 
-                        const result = await response.json();
-                        return result[0].translations[0].text;
-                    }
-                })
-            );
+                // Reemplazar el contenido con los segmentos traducidos
+                contentElement.innerHTML = translatedSegments.join("");
 
-            // Reemplazar el contenido con los segmentos traducidos
-            contentElement.innerHTML = translatedSegments.join("");
-
-            console.log("HTML traducido:", contentElement.innerHTML);
+                console.log("HTML traducido:", contentElement.innerHTML);
+            }
         } catch (error) {
             console.error("Error:", error.message);
         }
