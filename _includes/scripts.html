@@ -23,6 +23,8 @@
         console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
+            // excluir de la traducción tags img
+
             const response = await fetch(
                 `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
                 {
@@ -31,7 +33,9 @@
                         "Content-Type": "application/json",
                         "Ocp-Apim-Subscription-Key": subscriptionKey,
                     },
-                    body: JSON.stringify([{ text: originalHTML }]),
+                    body: JSON.stringify([
+                        { text: originalHTML.replace(/<img[^>]*>/g, "") },
+                    ]),
                 }
             );
 
