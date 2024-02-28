@@ -23,7 +23,11 @@
         console.log("HTML original:", originalHTML);
         console.log("Idioma seleccionado:", selectedLanguage);
         try {
-            // excluir de la traducción tags img
+            // Excluir las etiquetas <img> de la traducción
+            const sanitizedHTML = originalHTML.replace(
+                /<img\b[^>]*>/g,
+                (match) => `<!--${match}-->`
+            );
 
             const response = await fetch(
                 `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
@@ -33,9 +37,7 @@
                         "Content-Type": "application/json",
                         "Ocp-Apim-Subscription-Key": subscriptionKey,
                     },
-                    body: JSON.stringify([
-                        { text: originalHTML.replace(/<img[^>]*>/g, "") },
-                    ]),
+                    body: JSON.stringify([{ text: sanitizedHTML }]),
                 }
             );
 
@@ -46,10 +48,14 @@
             const result = await response.json();
             console.log("Resultado de la traducción:", result);
 
-            // Actualizar el contenido del elemento con la traducción
-            contentElement.innerHTML = result[0].translations[0].text;
+            // Restaurar las etiquetas <img> en el contenido traducido
+            const restoredHTML = result[0].translations[0].text.replace(
+                /<!--([^>]+)-->/g,
+                "$1"
+            );
+            contentElement.innerHTML = restoredHTML;
 
-            console.log("HTML traducido:", result[0].translations[0].text);
+            console.log("HTML traducido:", restoredHTML);
         } catch (error) {
             console.error("Error:", error.message);
         }
