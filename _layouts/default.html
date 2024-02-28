@@ -100,19 +100,29 @@
 
             // Función para eliminar scripts y otros elementos no esenciales
             function sanitizeContent(htmlContent) {
-                // Elimina bloques if (comentarios)
-                const sanitizedWithoutIfComments = htmlContent.replace(
-                    /<!--\[if.*?\]>([\s\S]*?)<!\[endif\]-->/g,
-                    ""
-                );
+                // Crear un elemento div temporal para analizar el contenido
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = htmlContent;
 
-                // Elimina bloques if sin comentarios (ejemplo simple)
-                const sanitizedWithoutIf = sanitizedWithoutIfComments.replace(
-                    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>|<[^>]*class="if-block"[^>]*>[^<]*(?:(?![<\/div>])<[^<]*)*<\/div>/gi,
-                    ""
-                );
+                // Eliminar scripts
+                const scripts = tempDiv.getElementsByTagName("script");
+                for (let i = scripts.length - 1; i >= 0; i--) {
+                    scripts[i].parentNode.removeChild(scripts[i]);
+                }
 
-                return sanitizedWithoutIf;
+                // Eliminar bloques if sin comentarios
+                const elementsWithIf = tempDiv.querySelectorAll('*[id^="if-"]');
+                elementsWithIf.forEach((element) => {
+                    const comments = Array.from(element.childNodes).filter(
+                        (node) => node.nodeType === 8
+                    ); // 8 es el tipo de nodo para comentarios
+                    if (comments.length === 0) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+
+                // Devolver el contenido limpio
+                return tempDiv.innerHTML;
             }
         </script>
     </body>
