@@ -5,126 +5,23 @@
     </head>
 
     <body id="sg">
-        <div class="sg-pusher" id="translatedContent">
+        <div class="sg-pusher">
             {% include sidebar.html %}
             <main id="sgMain" class="sg-main">
-                <div
-                    style="
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        padding: 20px;
-                    "
-                >
-                    <div id="languageSelector">
-                        <label for="language">Seleccionar idioma:</label>
-                        <select id="language">
-                            <option value="es">Español</option>
-                            <option value="en">Inglés</option>
-                            <option value="pt">Portugués</option>
-                            <!-- Agrega más opciones según tus necesidades -->
-                        </select>
-                        <button onclick="translateHTML()">Traducir</button>
-                    </div>
-                    {{ content }}
+                <div id="languageSelector">
+                    <label for="language">Seleccionar idioma:</label>
+                    <select id="language">
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                        <option value="pt">Portugués</option>
+                        <!-- Agrega más opciones según tus necesidades -->
+                    </select>
+                    <button onclick="translateText()">Traducir</button>
                 </div>
-
+                {{ content }}
                 <!-- {% include footer.html %} -->
             </main>
         </div>
         {% include scripts.html %}
-        <script>
-            async function translateHTML() {
-                const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
-                const endpoint =
-                    "https://api.cognitive.microsofttranslator.com/";
-                const version = "3.0";
-
-                // Obtener el idioma seleccionado del selector
-                const selectedLanguage =
-                    document.getElementById("language").value;
-
-                console.log("Idioma seleccionado:", selectedLanguage);
-                console.log("Idioma seleccionado:", selectedLanguage);
-
-                try {
-                    // Obtén el contenido HTML de la etiqueta
-                    const contentElement =
-                        document.getElementById("translatedContent");
-                    const htmlContent = contentElement.textContent.trim(); // Usar textContent en lugar de innerHTML
-                    console.log("Contenido original:", htmlContent);
-
-                    // Elimina scripts y otros elementos no esenciales
-                    const sanitizedContent = sanitizeContent(htmlContent);
-                    console.log("Contenido sanitizado:", sanitizedContent);
-
-                    // Asegúrate de que el contenido esté en el formato correcto
-                    const requestBody = [{ text: sanitizedContent }];
-                    console.log("Cuerpo de la solicitud:", requestBody);
-
-                    const response = await fetch(
-                        `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "Ocp-Apim-Subscription-Key": subscriptionKey,
-                            },
-                            body: JSON.stringify(requestBody),
-                        }
-                    );
-
-                    if (!response.ok) {
-                        throw new Error("Error en la solicitud de traducción");
-                    }
-
-                    const result = await response.json();
-
-                    // Restaura el contenido traducido a la etiqueta
-                    contentElement.innerHTML = ""; // Limpiar contenido existente
-                    contentElement.textContent = result[0].translations[0].text; // Usar textContent en lugar de innerHTML
-                    console.log(
-                        "Contenido traducido:",
-                        contentElement.textContent
-                    );
-                } catch (error) {
-                    console.error("Error:", error.message);
-                    console.error(
-                        "Detalles del error:",
-                        error.response && error.response.data
-                    );
-                }
-            }
-
-            // Llamada a la función de traducción
-            translateHTML();
-
-            // Función para eliminar scripts y otros elementos no esenciales
-            function sanitizeContent(htmlContent) {
-                // Crear un elemento div temporal para analizar el contenido
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = htmlContent;
-
-                // Eliminar scripts
-                const scripts = tempDiv.getElementsByTagName("script");
-                for (let i = scripts.length - 1; i >= 0; i--) {
-                    scripts[i].parentNode.removeChild(scripts[i]);
-                }
-
-                // Eliminar bloques if sin comentarios
-                const elementsWithIf = tempDiv.querySelectorAll('*[id^="if-"]');
-                elementsWithIf.forEach((element) => {
-                    const comments = Array.from(element.childNodes).filter(
-                        (node) => node.nodeType === 8
-                    ); // 8 es el tipo de nodo para comentarios
-                    if (comments.length === 0) {
-                        element.parentNode.removeChild(element);
-                    }
-                });
-
-                // Devolver el contenido limpio
-                return tempDiv.innerHTML;
-            }
-        </script>
     </body>
 </html>
