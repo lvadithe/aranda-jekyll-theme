@@ -25,49 +25,40 @@
 
             // Iterar sobre los elementos y traducir su contenido
             for (const contentElement of elements) {
-                const originalHTML = contentElement.innerHTML;
+                const originalHTML = contentElement.outerHTML; // Cambio aquí
                 console.log("HTML original:", originalHTML);
 
-                // Dividir el HTML en segmentos de texto e imágenes
-                const segments = originalHTML.split(/(<img\b[^>]*>)/g);
-
-                // Traducir solo los segmentos de texto
-                const translatedSegments = await Promise.all(
-                    segments.map(async (segment) => {
-                        if (segment.startsWith("<img")) {
-                            // Mantener la etiqueta de imagen sin traducción
-                            return segment;
-                        } else {
-                            // Traducir el segmento de texto
-                            const response = await fetch(
-                                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                                {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "Ocp-Apim-Subscription-Key":
-                                            subscriptionKey,
-                                    },
-                                    body: JSON.stringify([{ text: segment }]),
-                                }
-                            );
-
-                            if (!response.ok) {
-                                throw new Error(
-                                    "Error en la solicitud de traducción"
-                                );
-                            }
-
-                            const result = await response.json();
-                            return result[0].translations[0].text;
-                        }
-                    })
+                // Traducir el HTML completo
+                const response = await fetch(
+                    `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Ocp-Apim-Subscription-Key": subscriptionKey,
+                        },
+                        body: JSON.stringify([{ text: originalHTML }]),
+                    }
                 );
 
-                // Reemplazar el contenido con los segmentos traducidos
-                contentElement.innerHTML = translatedSegments.join("");
+                if (!response.ok) {
+                    throw new Error("Error en la solicitud de traducción");
+                }
 
-                console.log("HTML traducido:", contentElement.innerHTML);
+                const result = await response.json();
+                const translatedHTML = result[0].translations[0].text;
+
+                // Crear un nuevo elemento con el HTML traducido
+                const newElement = document.createElement("div");
+                newElement.innerHTML = translatedHTML;
+
+                // Reemplazar el contenido del elemento original con el nuevo
+                contentElement.parentNode.replaceChild(
+                    newElement.firstChild,
+                    contentElement
+                );
+
+                console.log("HTML traducido:", translatedHTML);
             }
         } catch (error) {
             console.error("Error:", error.message);
