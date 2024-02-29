@@ -25,24 +25,26 @@
                         top: 20px;
                         display: flex;
                         flex-direction: column;
-                        align-items: flex-end; /* Alinea los elementos al final del contenedor */
+                        align-items: flex-end;
                     "
                 >
                     <img
                         src="{{ site.baseurl }}/assets/images/ic_language.svg"
                         alt=""
                         onclick="toggleLanguageSelector()"
-                        style="
-                            cursor: pointer;
-                            height: 30px;
-                            width: 30px;
-                            margin-bottom: 10px;
-                        "
+                        style="cursor: pointer; height: 30px; width: 30px"
                     />
                     <select
                         id="language"
-                        onchange="translateText()"
-                        style="padding: 3px; display: none; margin-top: 10px"
+                        onchange="translateText(); closeLanguageSelector();"
+                        style="
+                            padding: 3px;
+                            display: none;
+                            margin-top: 10px;
+                            border: 1px solid #000;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        "
                     >
                         <option value="es">Español</option>
                         <option value="en">Inglés</option>

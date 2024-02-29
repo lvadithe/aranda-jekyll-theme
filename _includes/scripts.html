@@ -72,5 +72,16 @@
         } catch (error) {
             console.error("Error:", error.message);
         }
+
+        // Cerrar el selector de idioma
+        closeLanguageSelector();
+    }
+
+    function closeLanguageSelector() {
+        var languageSelector = document.getElementById("languageSelector");
+        var languageDropdown = document.getElementById("language");
+
+        languageDropdown.style.display = "none";
+        languageSelector.removeEventListener("click", closeLanguageSelector);
     }
 </script>
