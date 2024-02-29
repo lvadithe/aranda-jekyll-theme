@@ -22,13 +22,12 @@
                     style="position: absolute; right: 10px"
                 >
                     <label for="language">Seleccionar idioma:</label>
-                    <select id="language">
+                    <select id="language" onchange="translateText()">
                         <option value="es">Español</option>
                         <option value="en">Inglés</option>
                         <option value="pt">Portugués</option>
                         <!-- Agrega más opciones según tus necesidades -->
                     </select>
-                    <button onclick="translateText()">Traducir</button>
                 </div>
                 <div
                     style="
