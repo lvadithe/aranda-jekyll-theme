@@ -1,38 +1,38 @@
-<a href="javascript:void(0)" class="sg_sidebar_button "><i class="icon" data-icon="menu"></i></a>
-<div id="sgSidebar" class="sg_sidebar ">
-  <p id="hideSidebarButton" class="sg_sidebar_close_button "></p>
+<a href="javascript:void(0)" class="sg_sidebar_button translatedContent"><i class="icon" data-icon="menu"></i></a>
+<div id="sgSidebar" class="sg_sidebar translatedContent">
+  <p id="hideSidebarButton" class="sg_sidebar_close_button translatedContent"></p>
 
-  <a href="{{ site.baseurl }}/index.html" class="logo ">
+  <a href="{{ site.baseurl }}/index.html" class="logo translatedContent">
     <div class="icon"><img src="{{ site.baseurl }}/assets/branding/png/styleguide-128x128.png"></div>
-    <div class="title ">{{ site.title }}</div>
+    <div class="title translatedContent">{{ site.title }}</div>
   </a>
 
   {% if site.title contains "Release Notes" %}
-  <a href="https://docs.arandasoft.com/notes.html" >Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
   {% elsif site.baseurl == "/database" %}
-  <a href="https://docs.arandasoft.com/notes.html" >Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
   {% elsif site.title contains "Aranda Tools" %}
-  <a href="https://docs.arandasoft.com/notes.html" >Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
   {% elsif site.title contains "API" %}
-  <a href="https://docs.arandasoft.com/apis.html" >Home</a></li>
+  <a href="https://docs.arandasoft.com/apis.html" class="translatedContent">Home</a></li>
   {% elsif site.title contains "Troubleshooting" %}
-  <a href="https://docs.arandasoft.com/ts.html" >Home</a></li>
+  <a href="https://docs.arandasoft.com/ts.html" class="translatedContent">Home</a></li>
   {% else %}
-  <a href="https://docs.arandasoft.com/" >Home</a></li>
+  <a href="https://docs.arandasoft.com/" class="translatedContent">Home</a></li>
   {% endif %}
 
   {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
   {% for item in site.data.sidebar[page.sidebar] %}
 
   <div class="group">
-    <div class="group_title collapsible " id="{{item.chapter}}-btn">{{ item.title }}
+    <div class="group_title collapsible translatedContent" id="{{item.chapter}}-btn">{{ item.title }}
       <span id="{{item.chapter}}-span">
         <img src="{{ site.baseurl }}/assets/images/ic_flecha.svg" width="13" alt="Collapse menú">
       </span>
     </div>
 
     {% if item.children != null %}
-    <ul class="collapsible_content " id="{{item.chapter}}-content">
+    <ul class="collapsible_content translatedContent" id="{{item.chapter}}-content">
       {% for child in item.children %}
       <li>
         <a href="{{ child.url | relative_url }}" {% if child.url==page.url %} class="active" {% endif %}>
@@ -45,7 +45,7 @@
 
     {% if item.chapter %}
     <!-- Container with each all items -->
-    <ul class="collapsible_content " id="{{item.chapter}}-content">
+    <ul class="collapsible_content translatedContent" id="{{item.chapter}}-content">
       {% for child in site.pages %}
       {% if child.chapter == item.chapter %}
       <!-- Single item -->
@@ -53,7 +53,7 @@
         <a href="{{ child.url | relative_url }}" {% if child.url==page.url %} class="active" {% endif %}>
           {{child.title }}
           {% if child.beta == true %}
-          <span class="beta_tag ">BETA</span>
+          <span class="beta_tag translatedContent">BETA</span>
           {% endif %}
         </a>
       </li>
