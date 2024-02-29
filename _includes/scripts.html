@@ -7,10 +7,14 @@
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
     // Función para traducir el contenido de elementos con la clase especificada
+    const sidebarScriptContent =
+        document.getElementById("sidebar-script").innerText;
     async function translateText() {
         const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
         const endpoint = "https://api.cognitive.microsofttranslator.com/";
         const version = "3.0";
+
+        document.getElementById("sidebar-script").innerText = "";
 
         // Clase de elementos a traducir
         const elementClass = "translatedContent";
@@ -74,6 +78,8 @@
         }
 
         // Cerrar el selector de idioma
+        document.getElementById("sidebar-script").innerText =
+            sidebarScriptContent;
         closeLanguageSelector();
     }
 
