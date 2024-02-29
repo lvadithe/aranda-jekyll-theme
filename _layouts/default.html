@@ -19,16 +19,25 @@
             >
                 <div
                     id="languageSelector"
-                    style="position: absolute; right: 10px"
+                    style="
+                        position: absolute;
+                        right: 10px;
+                        display: inline-block;
+                    "
                 >
-                    <label for="language">Seleccionar idioma:</label>
-                    <select id="language" onchange="translateText()">
+                    <img src="../assets/images/globe.png" alt="globe" />
+                    <select
+                        id="language"
+                        onchange="translateText()"
+                        style="padding: 3px"
+                    >
                         <option value="es">Español</option>
                         <option value="en">Inglés</option>
                         <option value="pt">Portugués</option>
                         <!-- Agrega más opciones según tus necesidades -->
                     </select>
                 </div>
+
                 <div
                     style="
                         flex-grow: 1;
