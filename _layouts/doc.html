@@ -24,7 +24,7 @@ layout: default
                         <a
                             id="convertPDF"
                             class="mb-2 ml-5"
-                            href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf"
+                            href="{{ site.baseurl }}/assets/pdfs/{{site.baseurl | remove_first: '/'}}.pdf"
                             download
                         >
                             <img
@@ -36,6 +36,8 @@ layout: default
                             <h1 class="translatedContent">Descargar PDF</h1>
                         </a>
                     </div>
+                    <h1>{{ site }}</h1>
+                    <h1>{{ site.baseurl }}</h1>
                 </div>
                 {% endif %}
             </div>
