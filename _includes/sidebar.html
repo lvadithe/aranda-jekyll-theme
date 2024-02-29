@@ -65,10 +65,12 @@
   </div>
   <script>
     if (document.getElementById('{{item.chapter}}-content').getElementsByClassName('active').length > 0) {
+      console.log("{{item.chapter}}-content");
       document.getElementById('{{item.chapter}}-content').classList.add("collapsible_active");
       document.getElementById('{{item.chapter}}-span').classList.add('collapsible_arrow')
     }
     document.getElementById('{{item.chapter}}-btn').addEventListener('click', function () {
+      console.log("{{item.chapter}}-content");
       document.getElementById('{{item.chapter}}-content').classList.toggle('collapsible_active')
       document.getElementById('{{item.chapter}}-span').classList.toggle('collapsible_arrow')
     })
