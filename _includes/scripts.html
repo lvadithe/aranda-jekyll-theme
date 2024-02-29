@@ -23,10 +23,6 @@
             // Obtener una lista de elementos con la clase especificada
             const elements = document.getElementsByClassName(elementClass);
 
-            // Guardar el contenido del script antes de la traducción
-            const scriptContent =
-                document.getElementById("requisitos-script").innerText;
-
             // Iterar sobre los elementos y traducir su contenido
             for (const contentElement of elements) {
                 const originalHTML = contentElement.innerHTML;
@@ -73,10 +69,6 @@
 
                 console.log("HTML traducido:", contentElement.innerHTML);
             }
-
-            // Restaurar el contenido del script después de la traducción
-            document.getElementById("requisitos-script").innerText =
-                scriptContent;
         } catch (error) {
             console.error("Error:", error.message);
         }
