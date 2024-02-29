@@ -5,7 +5,7 @@
 <script src="{{ site.baseurl }}/assets/js/libs/iframeResizer.min.js"></script>
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
-<script>
+<!-- <script>
     // Función para traducir el contenido de elementos con la clase especificada
     async function translateText() {
         const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
@@ -73,4 +73,150 @@
             console.error("Error:", error.message);
         }
     }
+</script>
+ -->
+
+<script>
+    // Función para traducir el contenido de elementos con la clase especificada
+    async function translateText() {
+        const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
+        const endpoint = "https://api.cognitive.microsofttranslator.com/";
+        const version = "3.0";
+
+        // Clase de elementos a traducir
+        const elementClass = "translatedContent";
+
+        // Obtener el idioma seleccionado del selector
+        const selectedLanguage = document.getElementById("language").value;
+
+        console.log("Idioma seleccionado:", selectedLanguage);
+        try {
+            // Obtener una lista de elementos con la clase especificada
+            const elements = document.getElementsByClassName(elementClass);
+
+            // Iterar sobre los elementos y traducir su contenido
+            for (const contentElement of elements) {
+                const originalHTML = contentElement.innerHTML;
+                console.log("HTML original:", originalHTML);
+
+                // Dividir el HTML en segmentos de texto e imágenes
+                const segments = originalHTML.split(/(<img\b[^>]*>)/g);
+
+                // Traducir solo los segmentos de texto
+                const translatedSegments = await Promise.all(
+                    segments.map(async (segment) => {
+                        if (segment.startsWith("<img")) {
+                            // Mantener la etiqueta de imagen sin traducción
+                            return segment;
+                        } else {
+                            // Traducir el segmento de texto
+                            const response = await fetch(
+                                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Ocp-Apim-Subscription-Key":
+                                            subscriptionKey,
+                                    },
+                                    body: JSON.stringify([{ text: segment }]),
+                                }
+                            );
+
+                            if (!response.ok) {
+                                throw new Error(
+                                    "Error en la solicitud de traducción"
+                                );
+                            }
+
+                            const result = await response.json();
+                            return result[0].translations[0].text;
+                        }
+                    })
+                );
+
+                // Reemplazar el contenido con los segmentos traducidos
+                contentElement.innerHTML = translatedSegments.join("");
+
+                console.log("HTML traducido:", contentElement.innerHTML);
+            }
+
+            // Después de la traducción, restablecer eventos
+            resetEvents();
+        } catch (error) {
+            console.error("Error:", error.message);
+        }
+    }
+
+    // Función para reiniciar eventos después de la traducción
+    function resetEvents() {
+        // Asignar eventos de clic a los elementos traducidos
+        const sidebarButton = document.querySelector(
+            ".sg_sidebar_button.translatedContent"
+        );
+        const collapsibleTitles = document.querySelectorAll(
+            ".collapsible.translatedContent"
+        );
+
+        // Evento clic para el botón de la barra lateral
+        sidebarButton.addEventListener("click", handleSidebarButtonClick);
+
+        // Evento clic para títulos colapsables
+        collapsibleTitles.forEach((title) => {
+            title.addEventListener("click", handleCollapsibleTitleClick);
+        });
+    }
+
+    // Ejemplo de función de manejo de clic para el botón de la barra lateral
+    function handleSidebarButtonClick() {
+        console.log("Botón de la barra lateral clicado");
+
+        // Obtener el contenido del elemento clicado
+        const contentElement = document.getElementById("sgSidebar");
+
+        // Verificar si el contenido está activo
+        const isActive =
+            contentElement.classList.contains("collapsible_active");
+
+        // Modificar las clases y el estado según sea necesario
+        if (isActive) {
+            contentElement.classList.remove("collapsible_active");
+            document
+                .getElementById("hideSidebarButton")
+                .classList.remove("collapsible_arrow");
+        } else {
+            contentElement.classList.add("collapsible_active");
+            document
+                .getElementById("hideSidebarButton")
+                .classList.add("collapsible_arrow");
+        }
+    }
+
+    // Ejemplo de función de manejo de clic para títulos colapsables
+    function handleCollapsibleTitleClick(event) {
+        console.log("Título colapsable clicado:", event.target);
+
+        // Obtener el contenido del elemento clicado
+        const contentElement = event.target.nextElementSibling;
+
+        // Verificar si el contenido está activo
+        const isActive =
+            contentElement.classList.contains("collapsible_active");
+
+        // Modificar las clases y el estado según sea necesario
+        if (isActive) {
+            contentElement.classList.remove("collapsible_active");
+            event.target
+                .querySelector("span")
+                .classList.remove("collapsible_arrow");
+        } else {
+            contentElement.classList.add("collapsible_active");
+            event.target
+                .querySelector("span")
+                .classList.add("collapsible_arrow");
+        }
+    }
+
+    // Restablecer eventos después de cargar la página
+    document.addEventListener("DOMContentLoaded", resetEvents);
 </script>
