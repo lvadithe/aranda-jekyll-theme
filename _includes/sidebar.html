@@ -63,7 +63,7 @@
     {% endif %}
 
   </div>
-  <script>
+  <script id="requisitos-script">
     if (document.getElementById('{{item.chapter}}-content').getElementsByClassName('active').length > 0) {
       console.log("{{item.chapter}}-content");
       document.getElementById('{{item.chapter}}-content').classList.add("collapsible_active");
