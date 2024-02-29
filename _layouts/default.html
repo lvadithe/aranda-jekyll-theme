@@ -25,11 +25,16 @@
                         display: inline-block;
                     "
                 >
-                    <img src="../assets/images/globe.png" alt="globe" />
+                    <img
+                        src="../assets/images/ic_globe.jpg"
+                        alt="globe"
+                        onclick="toggleLanguageSelector()"
+                        style="cursor: pointer"
+                    />
                     <select
                         id="language"
                         onchange="translateText()"
-                        style="padding: 3px"
+                        style="padding: 3px; display: none"
                     >
                         <option value="es">Español</option>
                         <option value="en">Inglés</option>
@@ -52,6 +57,16 @@
                 <!-- {% include footer.html %} -->
             </main>
         </div>
+        <script>
+            function toggleLanguageSelector() {
+                var languageSelector = document.getElementById("language");
+                languageSelector.style.display =
+                    languageSelector.style.display === "none" ||
+                    languageSelector.style.display === ""
+                        ? "inline-block"
+                        : "none";
+            }
+        </script>
         {% include scripts.html %}
     </body>
 </html>
