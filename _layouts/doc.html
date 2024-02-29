@@ -33,7 +33,12 @@ layout: default
                                 alt="Adobe PDF"
                                 id="pdf-ic"
                             />
-                            <h1>Descargar PDF</h1>
+                            <h1 class="translatedContent">Descargar PDF</h1>
+                            \
+                            <h1>
+                                {{ page.baseurl}} --- {{ page.url | remove: '/'
+                                | split: '/' | last | append: '.pdf' }}
+                            </h1>
                         </a>
                     </div>
                 </div>
