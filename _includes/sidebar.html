@@ -47,7 +47,7 @@
 
     {% if item.chapter %}
     <!-- Container with each all items -->
-    <ul class="collapsible_content" id="{{item.chapter}}-content">
+    <ul class="collapsible_content translatedContent" id="{{item.chapter}}-content">
       {% for child in site.pages %}
       {% if child.chapter == item.chapter %}
       <!-- Single item -->
