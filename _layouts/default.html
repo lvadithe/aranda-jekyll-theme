@@ -2,6 +2,13 @@
 <html id="sg" {% if site.language %} lang="{{ site.language }}" {% endif %}>
     <head>
         {% include header.html %}
+        <style>
+            #languageSelector img:hover {
+                filter: brightness(
+                    1.2
+                ); /* Puedes ajustar el valor según tus preferencias */
+            }
+        </style>
     </head>
 
     <body id="sg">
