@@ -19,6 +19,10 @@
         const selectedLanguage = document.getElementById("language").value;
 
         console.log("Idioma seleccionado:", selectedLanguage);
+        console.log(
+            "Contenido a Traducir:",
+            document.getElementsByClassName(elementClass)
+        );
         try {
             // Obtener una lista de elementos con la clase especificada
             const elements = document.getElementsByClassName(elementClass);
@@ -29,13 +33,18 @@
                 console.log("HTML original:", originalHTML);
 
                 // Dividir el HTML en segmentos de texto e imágenes
-                const segments = originalHTML.split(/(<img\b[^>]*>)/g);
+                const segments = originalHTML.split(
+                    /(<script\b[^>]*>[^]*?<\/script>|<img\b[^>]*>)/g
+                );
 
                 // Traducir solo los segmentos de texto
                 const translatedSegments = await Promise.all(
                     segments.map(async (segment) => {
                         if (segment.startsWith("<img")) {
                             // Mantener la etiqueta de imagen sin traducción
+                            return segment;
+                        } else if (segment.startsWith("<script")) {
+                            // Mantener el script sin traducción
                             return segment;
                         } else {
                             // Traducir el segmento de texto
@@ -69,7 +78,6 @@
 
                 console.log("HTML traducido:", contentElement.innerHTML);
             }
-            
         } catch (error) {
             console.error("Error:", error.message);
         }
