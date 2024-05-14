@@ -106,6 +106,14 @@
     }
 
     function saveTranslationToFile(translation, language, index) {
+        console.log(
+            "Guardando traducción:",
+            translation,
+            "en:",
+            language,
+            "index:",
+            index
+        );
         // Obtener la ruta original del archivo
         const originalFilePath =
             document.getElementsByClassName("translatedContent")[index].dataset
