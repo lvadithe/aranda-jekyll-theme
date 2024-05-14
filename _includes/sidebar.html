@@ -9,17 +9,17 @@
   </a>
 
   {% if site.title contains "Release Notes" %}
-  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="">Home</a></li>
   {% elsif site.baseurl == "/database" %}
-  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="">Home</a></li>
   {% elsif site.title contains "Aranda Tools" %}
-  <a href="https://docs.arandasoft.com/notes.html" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/notes.html" class="">Home</a></li>
   {% elsif site.title contains "API" %}
-  <a href="https://docs.arandasoft.com/apis.html" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/apis.html" class="">Home</a></li>
   {% elsif site.title contains "Troubleshooting" %}
-  <a href="https://docs.arandasoft.com/ts.html" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/ts.html" class="">Home</a></li>
   {% else %}
-  <a href="https://docs.arandasoft.com/" class="translatedContent">Home</a></li>
+  <a href="https://docs.arandasoft.com/" class="">Home</a></li>
   {% endif %}
 
 
@@ -27,14 +27,14 @@
   {% for item in site.data.sidebar[page.sidebar] %}
 
   <div class="group">
-    <div class="group_title collapsible translatedContent" id="{{item.chapter}}-btn" >{{ item.title }}
+    <div class="group_title collapsible " id="{{item.chapter}}-btn" >{{ item.title }}
       <span id="{{item.chapter}}-span">
         <img src="{{ site.baseurl }}/assets/images/ic_flecha.svg" width="13" alt="Collapse menú">
       </span>
     </div>
 
     {% if item.children != null %}
-    <ul class="collapsible_content translatedContent" id="{{item.chapter}}-content">
+    <ul class="collapsible_content " id="{{item.chapter}}-content">
       {% for child in item.children %}
       <li>
         <a href="{{ child.url | relative_url }}" {% if child.url==page.url %} class="active" {% endif %}>
@@ -47,7 +47,7 @@
 
     {% if item.chapter %}
     <!-- Container with each all items -->
-    <ul class="collapsible_content translatedContent" id="{{item.chapter}}-content">
+    <ul class="collapsible_content " id="{{item.chapter}}-content">
       {% for child in site.pages %}
       {% if child.chapter == item.chapter %}
       <!-- Single item -->
