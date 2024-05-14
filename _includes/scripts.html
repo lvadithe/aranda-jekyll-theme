@@ -6,52 +6,31 @@
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
-    // Función para traducir el contenido de elementos con la clase especificada
-    async function translateText() {
+    async function translateTextAndSave() {
         const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
         const endpoint = "https://api.cognitive.microsofttranslator.com/";
         const version = "3.0";
 
-        // Clase de elementos a traducir
         const elementClass = "translatedContent";
-
-        // Obtener el idioma seleccionado del selector
         const selectedLanguage = document.getElementById("language").value;
 
-        console.log("Idioma seleccionado:", selectedLanguage);
-        console.log(
-            "Contenido a Traducir:",
-            document.getElementsByClassName(elementClass)
-        );
-
         try {
-            // Obtener una lista de elementos con la clase especificada
             const elements = document.getElementsByClassName(elementClass);
-
-            // Crear una lista para almacenar las promesas de traducción
             const translationPromises = [];
 
-            // Iterar sobre los elementos y traducir su contenido
             for (const contentElement of elements) {
                 const originalHTML = contentElement.innerHTML;
-                console.log("HTML original:", originalHTML);
-
-                // Dividir el HTML en segmentos de texto e imágenes
                 const segments = originalHTML.split(
                     /(<script\b[^>]*>[^]*?<\/script>|<img\b[^>]*>)/g
                 );
 
-                // Traducir solo los segmentos de texto
                 const translatedSegments = await Promise.all(
                     segments.map(async (segment) => {
                         if (segment.startsWith("<img")) {
-                            // Mantener la etiqueta de imagen sin traducción
                             return segment;
                         } else if (segment.startsWith("<script")) {
-                            // Mantener el script sin traducción
                             return segment;
                         } else {
-                            // Traducir el segmento de texto
                             const response = await fetch(
                                 `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
                                 {
@@ -77,31 +56,35 @@
                     })
                 );
 
-                // Agregar la lista de segmentos traducidos a la lista de promesas
                 translationPromises.push(translatedSegments.join(""));
             }
 
-            // Esperar a que todas las traducciones estén listas
             const allTranslations = await Promise.all(translationPromises);
 
-            // Actualizar el contenido con los segmentos traducidos
             for (let i = 0; i < elements.length; i++) {
-                elements[i].innerHTML = allTranslations[i];
-                console.log("HTML traducido:", elements[i].innerHTML);
+                // Aquí es donde se guarda la traducción en un archivo
+                saveTranslationToFile(allTranslations[i], selectedLanguage, i);
             }
         } catch (error) {
             console.error("Error:", error.message);
         }
 
-        // Cerrar el selector de idioma
         closeLanguageSelector();
     }
 
-    function closeLanguageSelector() {
-        var languageSelector = document.getElementById("languageSelector");
-        var languageDropdown = document.getElementById("language");
+    function saveTranslationToFile(translation, language, index) {
+        // Obtener la ruta original del archivo
+        const originalFilePath =
+            document.getElementsByClassName("translatedContent")[index].dataset
+                .originalFilePath;
+        // Crear la ruta para la traducción
+        const translationFilePath = originalFilePath.replace(
+            "/en/",
+            "/" + language + "/"
+        );
 
-        languageDropdown.style.display = "none";
-        languageSelector.removeEventListener("click", closeLanguageSelector);
+        // Aquí deberías guardar la traducción en el archivo translationFilePath
+        // Por ejemplo, podrías hacer una solicitud al servidor para guardar el contenido traducido
+        console.log("Guardando traducción en:", translationFilePath);
     }
 </script>
