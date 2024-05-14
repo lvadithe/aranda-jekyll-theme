@@ -100,26 +100,25 @@
     }
 
     function saveTranslationToFile(translation, language) {
-        // crear carpeta para el idioma
-        fs.mkdirSync(`./translations/${language}`, { recursive: true });
+        // Generar el contenido del archivo
+        const content = translation;
 
-        // guardar traducción en un archivo
-        fs.writeFileSync(
-            `./translations/${language}/translation.html`,
-            translation,
-            (err) => {
-                if (err) {
-                    console.error("Error al guardar la traducción:", err);
-                } else {
-                    console.log("Traducción guardada con éxito");
-                }
-            }
-        );
+        // Crear un objeto Blob con el contenido
+        const blob = new Blob([content], { type: "text/html" });
 
-        console.log(
-            "Traducción guardada en:",
-            `./translations/${language}/translation.html`
-        );
+        // Crear un objeto URL para el Blob
+        const url = URL.createObjectURL(blob);
+
+        // Crear un enlace para descargar el archivo
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "translation.html";
+
+        // Hacer clic en el enlace para iniciar la descarga
+        a.click();
+
+        // Liberar el objeto URL
+        URL.revokeObjectURL(url);
     }
 
     function closeLanguageSelector() {
