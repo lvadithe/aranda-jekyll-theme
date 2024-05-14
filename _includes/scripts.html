@@ -101,19 +101,20 @@
     }
 
     function saveTranslationToFile(translation, language, index) {
+        console.log('save', document.getElementsByClassName("translatedContent")[index]);
         // Obtener la ruta original del archivo
-        const originalFilePath =
+        /* const originalFilePath =
             document.getElementsByClassName("translatedContent")[index].dataset
                 .originalFilePath;
         // Crear la ruta para la traducción
         const translationFilePath = originalFilePath.replace(
             "/en/",
             "/" + language + "/"
-        );
+        ); */
 
         // Aquí deberías guardar la traducción en el archivo translationFilePath
         // Por ejemplo, podrías hacer una solicitud al servidor para guardar el contenido traducido
-        console.log("Guardando traducción en:", translationFilePath);
+       /*  console.log("Guardando traducción en:", translationFilePath); */
     }
 
     function closeLanguageSelector() {
