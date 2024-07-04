@@ -6,126 +6,14 @@
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
-    const fs = require("fs");
-    // Función para traducir el contenido de elementos con la clase especificada
-    async function translateText() {
-        const subscriptionKey = "faf48684aab84958aa0ad9bea172126a";
-        const endpoint = "https://api.cognitive.microsofttranslator.com/";
-        const version = "3.0";
+    document.addEventListener('DOMContentLoaded', function() {
+        var languageSelector = document.getElementById('language');
 
-        // Clase de elementos a traducir
-        const elementClass = "translatedContent";
-
-        // Obtener el idioma seleccionado del selector
-        const selectedLanguage = document.getElementById("language").value;
-
-        console.log("Idioma seleccionado:", selectedLanguage);
-        console.log(
-            "Contenido a Traducir:",
-            document.getElementsByClassName(elementClass)
-        );
-
-        try {
-            // Obtener una lista de elementos con la clase especificada
-            const elements = document.getElementsByClassName(elementClass);
-
-            // Crear una lista para almacenar las promesas de traducción
-            const translationPromises = [];
-
-            // Iterar sobre los elementos y traducir su contenido
-            for (const contentElement of elements) {
-                const originalHTML = contentElement.innerHTML;
-                console.log("HTML original:", originalHTML);
-
-                // Dividir el HTML en segmentos de texto e imágenes
-                const segments = originalHTML.split(
-                    /(<script\b[^>]*>[^]*?<\/script>|<img\b[^>]*>)/g
-                );
-
-                // Traducir solo los segmentos de texto
-                const translatedSegments = await Promise.all(
-                    segments.map(async (segment) => {
-                        if (segment.startsWith("<img")) {
-                            // Mantener la etiqueta de imagen sin traducción
-                            return segment;
-                        } else if (segment.startsWith("<script")) {
-                            // Mantener el script sin traducción
-                            return segment;
-                        } else {
-                            // Traducir el segmento de texto
-                            const response = await fetch(
-                                `${endpoint}/translate?api-version=${version}&to=${selectedLanguage}`,
-                                {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "Ocp-Apim-Subscription-Key":
-                                            subscriptionKey,
-                                    },
-                                    body: JSON.stringify([{ text: segment }]),
-                                }
-                            );
-
-                            if (!response.ok) {
-                                throw new Error(
-                                    "Error en la solicitud de traducción"
-                                );
-                            }
-
-                            const result = await response.json();
-                            return result[0].translations[0].text;
-                        }
-                    })
-                );
-
-                // Agregar la lista de segmentos traducidos a la lista de promesas
-                translationPromises.push(translatedSegments.join(""));
-            }
-
-            // Esperar a que todas las traducciones estén listas
-            const allTranslations = await Promise.all(translationPromises);
-
-            // Actualizar el contenido con los segmentos traducidos
-            for (let i = 0; i < elements.length; i++) {
-                elements[i].innerHTML = allTranslations[i];
-                console.log("HTML traducido:", elements[i].innerHTML);
-                saveTranslationToFile(allTranslations, selectedLanguage);
-            }
-        } catch (error) {
-            console.error("Error:", error.message);
-        }
-
-        // Cerrar el selector de idioma
-        closeLanguageSelector();
-    }
-
-    function saveTranslationToFile(translation, language) {
-        // Generar el contenido del archivo
-        const content = translation;
-
-        // Crear un objeto Blob con el contenido
-        const blob = new Blob([content], { type: "text/html" });
-
-        // Crear un objeto URL para el Blob
-        const url = URL.createObjectURL(blob);
-
-        // Crear un enlace para descargar el archivo
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "translation.html";
-
-        // Hacer clic en el enlace para iniciar la descarga
-        a.click();
-
-        // Liberar el objeto URL
-        URL.revokeObjectURL(url);
-    }
-
-    function closeLanguageSelector() {
-        var languageSelector = document.getElementById("languageSelector");
-        var languageDropdown = document.getElementById("language");
-
-        languageDropdown.style.display = "none";
-        languageSelector.removeEventListener("click", closeLanguageSelector);
-    }
+        languageSelector.addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
+            var newUrl = baseUrl + "/adm/" + selectedLanguage;
+            window.location.href = newUrl;
+        });
+    });
 </script>
