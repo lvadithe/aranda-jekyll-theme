@@ -29,14 +29,10 @@
     {% assign sidebar = site.data.sidebar[page.sidebar] %}
     {{ sidebar | jsonify }}
 
-    <!-- Mostrar page.url, lang, params y site.baseurl para pruebas -->
-    <strong>Valor de page.url:</strong> {{ page.url }}<br>
-    <strong>Valor de lang:</strong> {{ lang | es}}<br>
-    <strong>Valor de params:</strong> {{ params | jsonify }}<br>
-    <strong>Valor de site.baseurl:</strong> {{ site.baseurl }}<br>
+    P 
   </p>
-  {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
-  {% for item in site.data.sidebar[page.sidebar] %}
+  {% if page.sidebar and site.data.sidebar[page.sidebar][lang] != null %}
+  {% for item in site.data.sidebar[page.sidebar][lang] %}
 
   <div class="group">
     <div class="group_title collapsible " id="{{item.chapter}}-btn" >{{ item.title }}
