@@ -2,7 +2,9 @@
 layout: default
 ---
 
-<header id="mastheadArea" class="sg_masthead">
+<header id="mastheadArea" class="sg_masthead" lang="{{
+    page.lang | default: site.language | default: 'en'
+}}"
     <div class="sg_contain" style="padding: 0">
         <div class="head">
             {% include GA_Script.html %}
