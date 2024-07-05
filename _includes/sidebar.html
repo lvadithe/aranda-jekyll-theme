@@ -26,7 +26,7 @@
     {% assign params = page.url | split: '/' %}
     {% assign lang = params[2] %}
     {% if lang == null %}
-    {% assign lang == "es" %}
+    {% assign lang = "es" %}
     {% endif %}
     {{ lang }}
     {% assign sidebar = site.data.sidebar[page.sidebar] %}
