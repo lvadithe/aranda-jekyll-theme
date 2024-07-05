@@ -23,7 +23,12 @@
   {% endif %}
 
   <p>
+    prueba
+    
     {% assign params = page.url | split: '/' %}
+    {% assign lang = params %}
+    {{ lang }}
+    
     
   </p>
   {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
