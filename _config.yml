@@ -33,11 +33,7 @@ baseurl         : /aranda-jekyll-theme
 destination     : _site          ## Output folder
 
 ## Collection Settings
-collections:
-  es:
-    output: true
-  en:
-    output: true
+## ===================
 
 ## Outputs the _docs collection !Required
 #collections:
