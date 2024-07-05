@@ -22,18 +22,8 @@
   <a href="https://docs.arandasoft.com/" class="">Home</a></li>
   {% endif %}
 
-  <p>
-    {% assign params = page.url | split: '/' %}
-    {% assign lang = params[2] %}
-    {{ lang }}
-    {% assign sidebar = site.data.sidebar[page.sidebar] %}
-    {{ sidebar | jsonify }}
-
-
-    P 
-  </p>
-  {% if page.sidebar and site.data.sidebar[page.sidebar][lang] != null %}
-  {% for item in site.data.sidebar[page.sidebar][lang] %}
+  {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
+  {% for item in site.data.sidebar[page.sidebar] %}
 
   <div class="group">
     <div class="group_title collapsible " id="{{item.chapter}}-btn" >{{ item.title }}

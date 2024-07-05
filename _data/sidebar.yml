@@ -13,13 +13,7 @@ test:
 
 
 docs:
-  es:
-    - title: Instalación
-      chapter: Instalación
-    - title: Uso
-      chapter: Uso
-  en:
-    - title: Installation
-      chapter: Installation
-    - title: Usage
-      chapter: Usage
+  - title: Instalación
+    chapter: Instalación
+  - title: Uso
+    chapter: Uso
