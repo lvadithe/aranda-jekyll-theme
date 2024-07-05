@@ -31,6 +31,9 @@
 
 
     P 
+
+    console.log de lang
+    {{ lang | jsonify }}
   </p>
   {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
   {% for item in site.data.sidebar[page.sidebar] %}
