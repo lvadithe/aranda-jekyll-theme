@@ -13,7 +13,7 @@
             var selectedLanguage = this.value;
             var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
             var jekyllBaseUrl = '{{ site.baseurl }}'; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
-            var newUrl = baseUrl + jekyllBaseUrl  + selectedLanguage;
+            var newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}`;
             window.location.href = newUrl;
         });
     });
