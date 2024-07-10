@@ -80,28 +80,6 @@
             </main>
         </div>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var languageSelector = document.getElementById('language');
-                var currentLanguage = "{{ lang }}"; // Obtiene el idioma actual del sitio desde la lógica de Jekyll
-
-                console.log("Idioma actual:", currentLanguage);
-
-                // Establece el valor del selector de idioma según el idioma actual del sitio
-                if (currentLanguage) {
-                    languageSelector.value = currentLanguage;
-                }
-
-                languageSelector.addEventListener('change', function() {
-                    var selectedLanguage = this.value;
-                    var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
-                    var jekyllBaseUrl = '{{ site.baseurl }}'; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
-                    var newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}/`;
-
-                    console.log("Idioma seleccionado:", selectedLanguage, "URL nueva:", newUrl);
-                    window.location.href = newUrl;
-                });
-            });
-
             function toggleLanguageSelector() {
                 var languageSelector = document.getElementById("language");
                 languageSelector.style.display =

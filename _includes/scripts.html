@@ -5,3 +5,20 @@
 <script src="{{ site.baseurl }}/assets/js/libs/iframeResizer.min.js"></script>
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var languageSelector = document.getElementById('language');
+
+        console.log("languageSelector", languageSelector);
+
+        languageSelector.addEventListener('change', function() {
+            var selectedLanguage = this.value;
+            var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
+            var jekyllBaseUrl = '{{ site.baseurl }}'; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
+            var newUrl = `${baseUrl}${jekyllBaseUrl}/pages/${selectedLanguage}`;
+
+            console.log("selectedLanguage", selectedLanguage, "baseUrl", baseUrl, "jekyllBaseUrl", jekyllBaseUrl, "newUrl", newUrl);
+            window.location.href = newUrl;
+        });
+    });
+</script>
