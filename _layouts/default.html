@@ -16,7 +16,9 @@
 
     <body id="sg">
         <div class="sg-pusher" style="display: flex">
-            {% include sidebar.html %}
+            <aside id="sidebar" style="width: 285px">
+                {% include sidebar.html %}
+            </aside>
             <main
                 id="sgMain"
                 class="sg-main"
@@ -25,6 +27,8 @@
                     flex-direction: column;
                     flex-grow: 1;
                     padding: 20px;
+                    margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
+                    align-items: center; /* Centrar el contenido */
                 "
             >
                 <div
@@ -65,7 +69,7 @@
                 <div
                     style="
                         flex-grow: 1;
-                        margin-left: 285px;
+                        margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
                         box-sizing: border-box;
                         overflow-y: auto;
                     "
