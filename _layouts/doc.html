@@ -2,37 +2,22 @@
 layout: default
 ---
 
-<header id="mastheadArea" class="sg_masthead"
+<header id="mastheadArea" class="sg_masthead">
     <div class="sg_contain" style="padding: 0">
         <div class="head">
             {% include GA_Script.html %}
-            <!--Buscador Aranda docs-->
+            <!-- Buscador Aranda docs -->
             <div class="row no-gutters">
-                <!--<div class="col searchbar-container">
-                    <div class="form-group input-group-lg buscador-container">
-                        <input
-                            id="searchbar"
-                            class="form-control"
-                            placeholder="Buscar"
-                        />
-                    </div>
-                    <div id="search_result"></div>
-                </div>-->
                 {% if site.title != "Aranda Database" %}
+                {% assign params = page.url | split: '/' %}
+                {% assign lang = params[2] %}
+                {% if lang == null %}
+                {% assign lang = "es" %}
+                {% endif %}
                 <div class="col-auto">
                     <div class="pdf">
-                        <a
-                            id="convertPDF"
-                            class="mb-2 ml-5"
-                            href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf"
-                            download
-                        >
-                            <img
-                                src="{{ site.baseurl }}/assets/images/icon-pdf.svg"
-                                width="64"
-                                alt="Adobe PDF"
-                                id="pdf-ic"
-                            />
+                        <a id="convertPDF" class="mb-2 ml-5" href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf" download>
+                            <img src="{{ site.baseurl }}/assets/images/icon-pdf.svg" width="64" alt="Adobe PDF" id="pdf-ic" />
                             <h1 class="translatedContent">Descargar PDF</h1>
                         </a>
                     </div>
@@ -46,9 +31,9 @@ layout: default
             </div>
             <!-- Adding result container -->
 
-            <!--Buscador Aranda docs-->
+            <!-- Buscador Aranda docs -->
             <!-- <div id="no-results"><p class="item-title">No hay resultados para la busqueda </p></div> -->
-            <div class="title header typo_ostrich translatedContent">
+            <div class="title header typo_ostrich">
                 {{ page.title }}
             </div>
             {% if page.info %}
@@ -65,9 +50,34 @@ layout: default
 </header>
 
 <article id="documentationArea" class="sg_doc">
-    <div class="translatedContent" class="sg_contain" id="article-content">
+    <div class="sg_contain" id="article-content">
         {{ content }}
     </div>
 </article>
 
-<script></script>
+<script>
+    // Glosario de traducciones para el botón "Descargar PDF"
+    const translations = {
+        es: "Descargar PDF",
+        en: "Download PDF",
+        pt: "Baixar PDF"
+    };
+
+    // Obtener el idioma de la URL
+    const params = window.location.pathname.split('/');
+    const lang = params[2] || 'es'; // Por defecto, español si no se especifica otro idioma
+
+    // Obtener el texto traducido según el idioma
+    const translatedText = translations[lang];
+
+    // Actualizar el texto del botón de descarga PDF
+    document.querySelector('.translatedContent').textContent = translatedText;
+
+    // Evento de descarga de PDF
+    document.getElementById('convertPDF').addEventListener('click', function(event) {
+        // Lógica para la descarga del PDF
+        // Aquí puedes agregar el código necesario para manejar la descarga del PDF
+        // Por ejemplo, si quieres que al hacer clic se abra una ventana de descarga del PDF.
+        // Puedes usar window.location.href o algún método específico de tu backend para la descarga.
+    });
+</script>
