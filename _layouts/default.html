@@ -1,101 +1,97 @@
 <!DOCTYPE html>
 <html id="sg" {% if site.language %} lang="{{ site.language }}" {% endif %}>
-    <head>
-        {% include header.html %}
-        <style>
-            #languageSelector img {
-                transition: box-shadow 0.3s; /* Agrega una transición suave */
-                border-radius: 50%;
-            }
 
-            #languageSelector img:hover {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            }
-        </style>
-    </head>
+<head>
+    {% include header.html %}
+    <style>
+        #languageSelector img {
+            transition: box-shadow 0.3s;
+            /* Agrega una transición suave */
+            border-radius: 50%;
+        }
 
-    <body id="sg">
-        <div class="sg-pusher" style="display: flex">
-            <aside id="sidebar">{% include sidebar.html %}</aside>
-            <main
-                id="sgMain"
-                class="sg-main"
-                style="
+        #languageSelector img:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body id="sg">
+    <div class="sg-pusher" style="display: flex">
+        <aside id="sidebar">{% include sidebar.html %}</aside>
+        <main id="sgMain" class="sg-main" style="
                     display: flex;
                     flex-direction: column;
                     flex-grow: 1;
                     padding: 20px;
                     margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
-                "
-            >
-                <div
-                    id="languageSelector"
-                    style="
+                ">
+            <div id="languageSelector" style="
                         position: absolute;
                         right: 45px;
                         top: 20px;
                         display: flex;
                         flex-direction: column;
                         align-items: flex-end;
-                    "
-                >
-                        {% assign params = page.url | split: '/' %}
-                        {% assign lang = params[2] %}
-                        {% if lang == null %}
-                            {% assign lang = "es" %}
-                        {% endif %}                  
-                    <img
-                        src="{{ site.baseurl }}/assets/images/ic_language.svg"
-                        alt=""
-                        onclick="toggleLanguageSelector()"
-                        style="cursor: pointer; height: 30px; width: 30px"
-                    />
-                    <select
-                        id="language"
-                        onchange="translateText(); closeLanguageSelector();"
-                        style="
+                    ">
+                {% assign params = page.url | split: '/' %}
+                {% assign lang = params[2] %}
+                {% if lang == null %}
+                {% assign lang = "es" %}
+                {% endif %}
+                <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
+                    style="cursor: pointer; height: 30px; width: 30px" />
+                <select id="language" onchange="translateText(); closeLanguageSelector();" style="
                             padding: 3px;
                             margin-top: 10px;
                             border: 1px solid #000;
                             border-radius: 5px;
                             cursor: pointer;
-                        "
-                    >
-                        <option value="es" {% if lang == "es" %} selected {% endif %}>Español</option>
-                        <option value="en" {% if lang == "en" %} selected {% endif %}>Inglés</option>
-                        <option value="pt" {% if lang == "pt" %} selected {% endif %}>Portugués</option>
-                        <!-- Agrega más opciones según tus necesidades -->
-                    </select>
-                </div>
+                        ">
+                    <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
+                    <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
+                    <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
+                    <!-- Agrega más opciones según tus necesidades -->
+                </select>
+            </div>
 
-                <div
-                    style="
+            <div style="
                         flex-grow: 1;
                         box-sizing: border-box;
                         overflow-y: auto;
-                    "
-                >
-                    {{ content }}
-                </div>
+                    ">
+                {{ content }}
+            </div>
 
-                <!-- {% include footer.html %} -->
-            </main>
-        </div>
-        <script>
-            function toggleLanguageSelector() {
-                var languageSelector = document.getElementById("language");
-                languageSelector.style.display =
-                    languageSelector.style.display === "none" ||
+            <!-- {% include footer.html %} -->
+        </main>
+    </div>
+    <script>
+        function toggleLanguageSelector() {
+            var languageSelector = document.getElementById("language");
+            languageSelector.style.display =
+                languageSelector.style.display === "none" ||
                     languageSelector.style.display === ""
-                        ? "inline-block"
-                        : "none";
-            }
+                    ? "inline-block"
+                    : "none";
+        }
 
-            function closeLanguageSelector() {
+        function closeLanguageSelector() {
             var languageSelector = document.getElementById("language");
             languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
         }
-        </script>
-        {% include scripts.html %}
-    </body>
+
+        // Cerrar el selector de idioma si se hace clic fuera de él
+        document.addEventListener('click', function (event) {
+            var languageSelector = document.getElementById("language");
+            var languageImage = document.querySelector("#languageSelector img");
+
+            if (event.target !== languageSelector && event.target !== languageImage) {
+                languageSelector.style.display = "none";
+            }
+        });
+    </script>
+    {% include scripts.html %}
+</body>
+
 </html>
