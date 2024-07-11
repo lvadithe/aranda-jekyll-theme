@@ -42,9 +42,11 @@
                     <p>
                         {{ site.baseurl }} 
                         ----------------------------
-                        {% assign params = page.url | split:
-                        '/' %} {% assign lang = params[2] %} {% if lang == null
-                        %} {% assign lang = "es" %} {% endif %} 
+                        {% assign params = page.url | split: '/' %}
+                        {% assign lang = params[2] %}
+                        {% if lang == null %}
+                            {% assign lang = "es" %}
+                        {% endif %}
                         -------------------------------
                         {{ lang }}
                     </p>
@@ -65,9 +67,9 @@
                             cursor: pointer;
                         "
                     >
-                        <option value="es">Español</option>
-                        <option value="en">Inglés</option>
-                        <option value="pt">Portugués</option>
+                        <option value="es" {% if lang == "es" %} selected {% endif %}>Español</option>
+                        <option value="en" {% if lang == "en" %} selected {% endif %}>Inglés</option>
+                        <option value="pt" {% if lang == "pt" %} selected {% endif %}>Portugués</option>
                         <!-- Agrega más opciones según tus necesidades -->
                     </select>
                 </div>
