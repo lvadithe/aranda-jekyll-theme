@@ -22,6 +22,18 @@
   <a href="https://docs.arandasoft.com/" class="">Home</a></li>
   {% endif %}
 
+  <p>
+    {% assign params = page.url | split: '/' %}
+    {% assign lang = params[2] %}
+    {% if lang == null %}
+    {% assign lang = "es" %}
+    {% endif %}
+    {{ lang }}
+    {% assign sidebar = site.data.sidebar[page.sidebar] %}
+    {{ sidebar | jsonify }}
+
+    P 
+  </p>
   
     {% assign params = page.url | split: '/' %}
     {% assign lang = params[2] %}
