@@ -81,15 +81,19 @@
             languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
         }
 
-        // Cerrar el selector de idioma si se hace clic fuera de él
         document.addEventListener('click', function (event) {
             var languageSelector = document.getElementById("language");
             var languageImage = document.querySelector("#languageSelector img");
 
-            if (event.target !== languageSelector && event.target !== languageImage) {
+            // Verifica si el evento fue fuera del selector de idioma o en la imagen del selector
+            if (!languageSelector.contains(event.target) && event.target !== languageImage) {
+                languageSelector.style.display = "none";
+            } else {
+                // Si se hace clic dentro del selector (en una opción de idioma), ciérralo después de seleccionar
                 languageSelector.style.display = "none";
             }
         });
+
     </script>
     {% include scripts.html %}
 </body>
