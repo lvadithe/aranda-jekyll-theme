@@ -2,22 +2,12 @@
 layout: default
 ---
 
-<header id="mastheadArea" class="sg_masthead"
+<header id="mastheadArea" class="sg_masthead">
     <div class="sg_contain" style="padding: 0">
         <div class="head">
             {% include GA_Script.html %}
-            <!--Buscador Aranda docs-->
+            <!-- Buscador Aranda docs -->
             <div class="row no-gutters">
-                <!--<div class="col searchbar-container">
-                    <div class="form-group input-group-lg buscador-container">
-                        <input
-                            id="searchbar"
-                            class="form-control"
-                            placeholder="Buscar"
-                        />
-                    </div>
-                    <div id="search_result"></div>
-                </div>-->
                 {% if site.title != "Aranda Database" %}
                 <div class="col-auto">
                     <div class="pdf">
@@ -33,20 +23,19 @@ layout: default
                                 alt="Adobe PDF"
                                 id="pdf-ic"
                             />
-                            <h1 class="translatedContent">Descargar PDFs</h1>
+                            <h1 class="translatedContent">Descargar PDF</h1>
                         </a>
                     </div>
                 </div>
                 {% endif %}
             </div>
-
             <!-- Adding result container -->
             <div class="row">
                 <ul id="result-box"></ul>
             </div>
             <!-- Adding result container -->
 
-            <!--Buscador Aranda docs-->
+            <!-- Buscador Aranda docs -->
             <!-- <div id="no-results"><p class="item-title">No hay resultados para la busqueda </p></div> -->
             <div class="title header typo_ostrich translatedContent">
                 {{ page.title }}
@@ -65,9 +54,26 @@ layout: default
 </header>
 
 <article id="documentationArea" class="sg_doc">
-    <div class="translatedContent" class="sg_contain" id="article-content">
+    <div class="translatedContent sg_contain" id="article-content">
         {{ content }}
     </div>
 </article>
 
-<script></script>
+<script>
+    // Glosario de traducciones
+    const translations = {
+        es: "Descargar PDF",
+        en: "Download PDF",
+        pt: "Baixar PDF",
+    };
+
+    // Obtener el idioma de la URL
+    const params = window.location.pathname.split("/");
+    const lang = params[2] || "es"; // Si no se especifica idioma, por defecto es español (es)
+
+    // Obtener el texto traducido
+    const translatedText = translations[lang];
+
+    // Asignar el texto traducido al elemento HTML
+    document.querySelector(".translatedContent").textContent = translatedText;
+</script>
