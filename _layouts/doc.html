@@ -87,11 +87,8 @@ layout: default
     const params = window.location.pathname.split('/');
     const lang = params[3] || 'es'; // Por defecto, español si no se especifica otro idioma
 
-    console.log("lang", lang, "translation", translation, "translation[lang]", translation[lang]);
-
     // Obtener el texto traducido según el idioma
     const translatedText = translation[lang].download;
-    console.log("translatedText", translatedText);
 
     // Actualizar el texto del botón de descarga PDF
     document.querySelector('.translatePDF').textContent = translatedText;
