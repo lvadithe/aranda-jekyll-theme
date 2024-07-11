@@ -90,7 +90,7 @@ layout: default
     console.log("lang", lang);
 
     // Obtener el texto traducido según el idioma
-    const translatedText = translations[lang];
+    const translatedText = translations[lang].download;
 
     // Actualizar el texto del botón de descarga PDF
     document.querySelector('.translatePDF').textContent = translatedText;
