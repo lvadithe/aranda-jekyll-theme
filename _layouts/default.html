@@ -76,21 +76,6 @@
                     : "none";
         }
 
-        function closeLanguageSelector() {
-            var languageSelector = document.getElementById("language");
-            languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
-        }
-
-        document.addEventListener('click', function (event) {
-            var languageSelector = document.getElementById("language");
-            var languageImage = document.querySelector("#languageSelector img");
-
-            
-                // Si se hace clic dentro del selector (en una opción de idioma), ciérralo después de seleccionar
-                languageSelector.style.display = "none";
-           
-        });
-
     </script>
     {% include scripts.html %}
 </body>

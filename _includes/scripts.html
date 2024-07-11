@@ -6,16 +6,35 @@
 <script src="{{ site.baseurl }}/assets/js/resize.js"></script>
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var languageSelector = document.getElementById('language');
+    document.addEventListener("DOMContentLoaded", function () {
+        var languageSelector = document.getElementById("language");
 
-        languageSelector.addEventListener('change', function() {
+        languageSelector.addEventListener("change", function () {
             var selectedLanguage = this.value;
             var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
-            var jekyllBaseUrl = '{{ site.baseurl }}'; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
+            var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
             var newUrl = `${baseUrl}${jekyllBaseUrl}/pages/${selectedLanguage}`;
 
             window.location.href = newUrl;
         });
+    });
+
+    function closeLanguageSelector() {
+        var languageSelector = document.getElementById("language");
+        languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
+    }
+
+    // Cerrar el selector de idioma si se hace clic fuera de él
+    document.addEventListener("click", function (event) {
+        var languageSelector = document.getElementById("language");
+        var languageImage = document.querySelector("#languageSelector img");
+
+        if (
+            event.target !== languageSelector &&
+            event.target !== languageImage
+        ) {
+            // Si se hace clic fuera del selector
+            languageSelector.style.display = "none";
+        }
     });
 </script>
