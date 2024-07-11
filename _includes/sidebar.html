@@ -28,7 +28,7 @@
     {% if lang == null %}
     {% assign lang = "es" %}
     {% endif %}
-    {{ lang }}
+
     {% assign sidebar = site.data.sidebar[page.sidebar] %}
     
   {% if page.sidebar and sidebar[lang] != null %}
