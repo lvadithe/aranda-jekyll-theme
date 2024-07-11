@@ -26,6 +26,7 @@ layout: default
                 {% assign lang = "es" %}
                 {% endif %}
                 <div class="pdf">
+                    <p>"{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf</p>
                     <a id="convertPDF" class="mb-2 ml-5"
                         href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf" download>
                         <img src="{{ site.baseurl }}/assets/images/icon-pdf.svg" width="64" alt="Adobe PDF"
@@ -68,7 +69,6 @@ layout: default
 </article>
 
 <script>
-    // Script dinamico para la descarga de PDF, tipo glosoario en - es - pt
 
     const translation = {
         es: {
@@ -83,13 +83,10 @@ layout: default
     };
 
 
-    // Obtener el idioma de la URL
     const params = window.location.pathname.split('/');
-    const lang = params[3] || 'es'; // Por defecto, español si no se especifica otro idioma
+    const lang = params[3] || 'es'; 
 
-    // Obtener el texto traducido según el idioma
     const translatedText = translation[lang].download;
 
-    // Actualizar el texto del botón de descarga PDF
     document.querySelector('.translatePDF').textContent = translatedText;
 </script>
