@@ -85,13 +85,10 @@
             var languageSelector = document.getElementById("language");
             var languageImage = document.querySelector("#languageSelector img");
 
-            // Verifica si el evento fue fuera del selector de idioma o en la imagen del selector
-            if (!languageSelector.contains(event.target) && event.target !== languageImage) {
-                languageSelector.style.display = "none";
-            } else {
+            
                 // Si se hace clic dentro del selector (en una opción de idioma), ciérralo después de seleccionar
                 languageSelector.style.display = "none";
-            }
+           
         });
 
     </script>
