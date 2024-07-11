@@ -28,11 +28,13 @@
     {% if lang == null %}
     {% assign lang = "es" %}
     {% endif %}
+    ----------------------
+    {{ params }}
     {{ lang }}
+    {{site.data}}
+    ---------------------- 
     {% assign sidebar = site.data.sidebar[page.sidebar] %}
     {{ sidebar | jsonify }}
-
-    P 
   </p>
   
     {% assign params = page.url | split: '/' %}
