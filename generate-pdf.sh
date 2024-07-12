@@ -2,22 +2,23 @@
 
 function generatePDF() {
     language="$1"
+    directory="_pages/${language}"
 
     # Remove existing pdf.md to create new file
-    rm _pages/pdf.md
+    rm "${directory}/pdf.md"
 
     # List all files ending with .md in the _pages/{language} directory sorting by numerical order starting from second field separated by "/"
-    FILES=$(find "_pages/${language}" -type f -name "*.md" | sort -t '/' -k 2n)
+    FILES=$(find "${directory}" -type f -name "*.md" | sort -t '/' -k 2n)
 
     # Getting manual name from index.md
-    MANUALNAME=$(grep 'title' _pages/index.md)
+    MANUALNAME=$(grep 'title' "${directory}/index.md")
 
     # Create and initialize pdf.md to create page with complete information
     echo "---
 ${MANUALNAME}
 permalink: /pdf
 layout: pdf
----" > _pages/pdf.md
+---" > "${directory}/pdf.md"
 
     # Running through list of files $FILES to then open it and concat with pdf.md
     for line in $FILES
@@ -26,7 +27,7 @@ layout: pdf
         CHAPTER=$(grep "excerpt: " "$line" | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
 
         # Check if this chapter exists in pdf.md to avoid repeated names in case the chapter markdown contains this name
-        EXISTS_CHAPTER=$(grep "$CHAPTER" _pages/pdf.md | wc -w)
+        EXISTS_CHAPTER=$(grep "$CHAPTER" "${directory}/pdf.md" | wc -w)
 
         # Skip the main markdown. The Introduction chapter and Main contain the same prologue.
         if [[ $CHAPTER != "Inicio" ]]
@@ -35,18 +36,18 @@ layout: pdf
             if [ $EXISTS_CHAPTER -eq 0 ]
             then
                 echo $CHAPTER
-                echo "\n# $CHAPTER" >> _pages/pdf.md
+                echo "\n# $CHAPTER" >> "${directory}/pdf.md"
             fi
         fi
 
         # Getting manual title to write inside pdf.md. Search the line that contains "title: " and parse text to get only name
         TITLE=$(grep "title: " "$line" | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
         # Check if manual title exists
-        EXISTS_TITLE=$(grep "$TITLE" _pages/pdf.md | wc -w)
+        EXISTS_TITLE=$(grep "$TITLE" "${directory}/pdf.md" | wc -w)
 
         if [ $EXISTS_TITLE -eq 0 ]
         then
-            echo "\n## $TITLE" >> _pages/pdf.md
+            echo "\n## $TITLE" >> "${directory}/pdf.md"
         fi
 
         # Find the line where the comments end
@@ -54,7 +55,7 @@ layout: pdf
         FROM=$(($FROM + 1))
 
         # Write inside pdf.md from below line number to end of file
-        tail -n +$FROM "$line" >> _pages/pdf.md
+        tail -n +$FROM "$line" >> "${directory}/pdf.md"
     done
 }
 
