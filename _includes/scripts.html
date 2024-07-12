@@ -10,11 +10,11 @@
         var languageSelector = document.getElementById("language");
 
         languageSelector.addEventListener("change", function () {
-            
+            // si esta en español no le pega a nada /adm
             var selectedLanguage = this.value;
             var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
-            var newUrl = `${baseUrl}${jekyllBaseUrl}/pages/${selectedLanguage}`;
+            var newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}`;
 
             window.location.href = newUrl;
         });
