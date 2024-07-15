@@ -4,32 +4,14 @@
 <head>
     {% include header.html %}
     <style>
-        /* Estilos para el selector de idioma */
-        .language-selector {
-            position: absolute;
-            right: 45px;
-            top: 45px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .language-selector img {
+        #languageSelector img {
             transition: box-shadow 0.3s;
+            /* Agrega una transición suave */
             border-radius: 50%;
         }
 
-        .language-selector img:hover {
+        #languageSelector img:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Estilos específicos para la flecha */
-        #arrow {
-            height: 10px;
-            width: 10px;
-            margin-top: 20px;
-            margin-left: 5px;
-            transition: transform 0.3s;
         }
     </style>
 </head>
@@ -44,37 +26,31 @@
                     padding: 20px;
                     margin-left: 285px; 
                 ">
-            <div id="languageSelector" class="language-selector" style="
+            <div id="languageSelector" style="
             position: absolute;
             right: 45px;
             top: 45px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: flex-end;
-        ">{% assign params = page.url | split: '/' %}
-                {% assign lang = params[2] %}
-                {% if lang == null %}
+        ">
+            {% assign params = page.url | split: '/' %}
+            {% assign lang = params[2] %}
+            {% if lang == null %}
                 {% assign lang = "es" %}
+            {% endif %}
+            <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
+                style="cursor: pointer; height: 30px; width: 30px" />
+            <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
+                {% if lang == "es" %}
+                    <span>ES</span>
+                {% elsif lang == "en" %}
+                    <span>EN</span>
+                {% elsif lang == "pt" %}
+                    <span>PT</span>
                 {% endif %}
-                <div style="display: flex; flex-direction: row;">
-
-                    <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt=""
-                        onclick="toggleLanguageSelector()" style="cursor: pointer; height: 30px; width: 30px" />
-                    <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
-                        {% if lang == "es" %}
-                        <span>ES</span>
-                        {% elsif lang == "en" %}
-                        <span>EN</span>
-                        {% elsif lang == "pt" %}
-                        <span>PT</span>
-                        {% endif %}
-                    </span>
-                    <img id="arrow" src="{{ site.baseurl }}/assets/images/ic_arrow_up.svg" alt="Flecha"
-                        style="height: 10px; width: 10px; margin-top: 20px; margin-left: 5px; transition: transform 0.3s;" />
-
-                </div>
-
-                <select id="language" onchange="translateText(); closeLanguageSelector()" style="
+            </span>
+            <select id="language" onchange="translateText(); closeLanguageSelector()" style="
                 display: none;
                 padding: 3px;
                 margin-top: 10px;
@@ -82,13 +58,13 @@
                 border-radius: 5px;
                 cursor: pointer;
             ">
-                    <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
-                    <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
-                    <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
-                    <!-- Agrega más opciones según tus necesidades -->
-                </select>
-            </div>
-
+                <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
+                <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
+                <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
+                <!-- Agrega más opciones según tus necesidades -->
+            </select>
+        </div>
+        
 
             <div style="
                         flex-grow: 1;
