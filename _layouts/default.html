@@ -13,6 +13,21 @@
         #languageSelector img:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
+        /* Estilos para la flecha */
+        #arrow {
+            margin-left: 5px;
+            /* Espacio entre el prefijo y la flecha */
+            font-size: 14px;
+            /* Tamaño del icono de flecha */
+            transition: transform 0.3s;
+            /* Agrega una transición suave al transform */
+        }
+
+        .open #arrow {
+            transform: rotate(180deg);
+            /* Rota la flecha cuando el selector está abierto */
+        }
     </style>
 </head>
 
@@ -34,23 +49,23 @@
             flex-direction: row;
             align-items: flex-end;
         ">
-            {% assign params = page.url | split: '/' %}
-            {% assign lang = params[2] %}
-            {% if lang == null %}
+                {% assign params = page.url | split: '/' %}
+                {% assign lang = params[2] %}
+                {% if lang == null %}
                 {% assign lang = "es" %}
-            {% endif %}
-            <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
-                style="cursor: pointer; height: 30px; width: 30px" />
-            <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
-                {% if lang == "es" %}
-                    <span>ES</span>
-                {% elsif lang == "en" %}
-                    <span>EN</span>
-                {% elsif lang == "pt" %}
-                    <span>PT</span>
                 {% endif %}
-            </span>
-            <select id="language" onchange="translateText(); closeLanguageSelector()" style="
+                <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
+                    style="cursor: pointer; height: 30px; width: 30px" />
+                <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
+                    {% if lang == "es" %}
+                    <span>ES</span>
+                    {% elsif lang == "en" %}
+                    <span>EN</span>
+                    {% elsif lang == "pt" %}
+                    <span>PT</span>
+                    {% endif %}
+                </span>
+                <select id="language" onchange="translateText(); closeLanguageSelector()" style="
                 display: none;
                 padding: 3px;
                 margin-top: 10px;
@@ -58,13 +73,13 @@
                 border-radius: 5px;
                 cursor: pointer;
             ">
-                <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
-                <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
-                <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
-                <!-- Agrega más opciones según tus necesidades -->
-            </select>
-        </div>
-        
+                    <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
+                    <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
+                    <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
+                    <!-- Agrega más opciones según tus necesidades -->
+                </select>
+            </div>
+
 
             <div style="
                         flex-grow: 1;
@@ -79,12 +94,19 @@
     </div>
     <script>
         function toggleLanguageSelector() {
-            var languageSelector = document.getElementById("language");
-            languageSelector.style.display =
-                languageSelector.style.display === "none" ||
-                    languageSelector.style.display === ""
-                    ? "inline-block"
-                    : "none";
+            var languageSelector = document.getElementById("languageSelector");
+            var arrow = document.getElementById("arrow");
+            var select = document.getElementById("language");
+
+            if (select.style.display === "none" || select.style.display === "") {
+                select.style.display = "inline-block";
+                languageSelector.classList.add("open");
+                arrow.innerHTML = "&#9650;"; // Cambia la flecha a arriba cuando se abre el selector
+            } else {
+                select.style.display = "none";
+                languageSelector.classList.remove("open");
+                arrow.innerHTML = "&#9660;"; // Cambia la flecha a abajo cuando se cierra el selector
+            }
         }
 
     </script>
