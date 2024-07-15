@@ -39,6 +39,9 @@
             {% if lang == null %}
                 {% assign lang = "es" %}
             {% endif %}
+            <span>
+                esto es lang: {{ lang }}
+            </span>
             <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
                 style="cursor: pointer; height: 30px; width: 30px" />
             <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
