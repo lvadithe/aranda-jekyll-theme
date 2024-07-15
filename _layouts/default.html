@@ -24,14 +24,14 @@
                     flex-direction: column;
                     flex-grow: 1;
                     padding: 20px;
-                    margin-left: 285px; 
+                    margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
                 ">
             <div id="languageSelector" style="
             position: absolute;
             right: 45px;
             top: 45px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: flex-end;
         ">
             {% assign params = page.url | split: '/' %}
@@ -51,7 +51,7 @@
                 {% endif %}
             </span>
             <select id="language" onchange="translateText(); closeLanguageSelector()" style="
-                display: none;
+                display: none; /* Ocultar el select por defecto */
                 padding: 3px;
                 margin-top: 10px;
                 border: 1px solid #000;
