@@ -9,16 +9,6 @@
     document.addEventListener("DOMContentLoaded", function () {
         var languageSelector = document.getElementById("language");
 
-        // Actualizar el prefijo del idioma seleccionado
-        if (languageSelector.value === "es") {
-            selectedLangSpan.textContent = "ES";
-        } else if (languageSelector.value === "en") {
-            selectedLangSpan.textContent = "EN";
-        } else if (languageSelector.value === "pt") {
-            selectedLangSpan.textContent = "PT";
-        }
-
-
         languageSelector.addEventListener("change", function () {
             // si esta en español no le pega a nada /adm
             var selectedLanguage = this.value;
@@ -28,18 +18,13 @@
 
             window.location.href = newUrl;
         });
-
+        
         closeLanguageSelector();
     });
 
     function closeLanguageSelector() {
-        var select = document.getElementById("language");
-        var languageSelector = document.getElementById("languageSelector");
-        var arrow = document.getElementById("arrow");
-
-        select.style.display = "none";
-        languageSelector.classList.remove("open");
-        arrow.innerHTML = "&#9660;"; // Asegura que la flecha esté apuntando hacia abajo cuando se cierra
+        var languageSelector = document.getElementById("language");
+        languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
     }
 
     // Cerrar el selector de idioma si se hace clic fuera de él

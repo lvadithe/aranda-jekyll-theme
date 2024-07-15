@@ -65,6 +65,7 @@
                     <span>PT</span>
                     {% endif %}
                 </span>
+                <img id="arrow" src="{{ site.baseurl }}/assets/images/ic_arrow_up.svg" alt="Flecha" />
                 <select id="language" onchange="translateText(); closeLanguageSelector()" style="
                 display: none;
                 padding: 3px;
@@ -94,19 +95,12 @@
     </div>
     <script>
         function toggleLanguageSelector() {
-            var languageSelector = document.getElementById("languageSelector");
-            var arrow = document.getElementById("arrow");
-            var select = document.getElementById("language");
-
-            if (select.style.display === "none" || select.style.display === "") {
-                select.style.display = "inline-block";
-                languageSelector.classList.add("open");
-                arrow.innerHTML = "&#9650;"; // Cambia la flecha a arriba cuando se abre el selector
-            } else {
-                select.style.display = "none";
-                languageSelector.classList.remove("open");
-                arrow.innerHTML = "&#9660;"; // Cambia la flecha a abajo cuando se cierra el selector
-            }
+            var languageSelector = document.getElementById("language");
+            languageSelector.style.display =
+                languageSelector.style.display === "none" ||
+                    languageSelector.style.display === ""
+                    ? "inline-block"
+                    : "none";
         }
 
     </script>
