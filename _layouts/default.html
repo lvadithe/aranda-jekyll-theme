@@ -4,14 +4,32 @@
 <head>
     {% include header.html %}
     <style>
-        #languageSelector img {
+        /* Estilos para el selector de idioma */
+        .language-selector {
+            position: absolute;
+            right: 45px;
+            top: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .language-selector img {
             transition: box-shadow 0.3s;
-            /* Agrega una transición suave */
             border-radius: 50%;
         }
 
-        #languageSelector img:hover {
+        .language-selector img:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilos específicos para la flecha */
+        #arrow {
+            height: 10px;
+            width: 10px;
+            margin-top: 20px;
+            margin-left: 5px;
+            transition: transform 0.3s;
         }
     </style>
 </head>
@@ -26,7 +44,7 @@
                     padding: 20px;
                     margin-left: 285px; 
                 ">
-            <div id="languageSelector" style="
+            <div id="languageSelector" class="language-selector" style="
             position: absolute;
             right: 45px;
             top: 45px;
@@ -34,7 +52,8 @@
             flex-direction: column;
             align-items: flex-end;
         ">
-                <div style="display: flex; flex-direction: row;"> {% assign params = page.url | split: '/' %}
+                <div style="display: flex; flex-direction: row;">
+                    {% assign params = page.url | split: '/' %}
                     {% assign lang = params[2] %}
                     {% if lang == null %}
                     {% assign lang = "es" %}
@@ -50,6 +69,8 @@
                         <span>PT</span>
                         {% endif %}
                     </span>
+                    <img id="arrow" src="{{ site.baseurl }}/assets/images/ic_arrow_up.svg" alt="Flecha"
+                        style="height: 10px; width: 10px; margin-top: 20px; margin-left: 5px; transition: transform 0.3s;" />
                 </div>
 
                 <select id="language" onchange="translateText(); closeLanguageSelector()" style="
