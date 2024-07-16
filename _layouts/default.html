@@ -37,18 +37,8 @@
 
                 <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
                     style="cursor: pointer; height: 30px; width: 30px" />
-                {% assign params = page.url | split: '/' %}
-                {% assign lang = params[2] %}
-                {% if lang == null %}
-                {% assign lang = "es" %}
-                {% endif %}
-                <span>
-                    esto es lang: {{ lang }}
-
-                    esto es param: {{ params }}
-
-                    esto es page.url: {{ page.url }}
-                </span>
+                
+                
                 <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
                     {% if lang == "es" %}
                     <span>ES</span>
@@ -65,12 +55,22 @@
                 border: 1px solid #000;
                 border-radius: 5px;
                 cursor: pointer;
-            ">
+            ">{% assign params = page.url | split: '/' %}
+                {% assign lang = params[2] %}
+                {% if lang == null %}
+                {% assign lang = "es" %}
+                {% endif %}
                     <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
                     <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
                     <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
                     <!-- Agrega más opciones según tus necesidades -->
-                </select>
+                </select><span>
+                    esto es lang: {{ lang }}
+
+                    esto es param: {{ params }}
+
+                    esto es page.url: {{ page.url }}
+                </span>
             </div>
 
 
