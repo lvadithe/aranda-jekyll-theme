@@ -26,47 +26,28 @@
                     padding: 20px;
                     margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
                 ">
-            {% assign params = page.url | split: '/' %}
-            {% assign lang = params[2] %}
-            {% if lang == null %}
-            {% assign lang = "es" %}
-            {% endif %}
-
             <div id="languageSelector" style="
-                position: absolute;
-                right: 45px;
-                top: 45px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-            ">
-
+                        position: absolute;
+                        right: 45px;
+                        top: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                    ">
+                {% assign params = page.url | split: '/' %}
+                {% assign lang = params[1] %} {# Modifica el índice según la estructura real de tu URL #}
+                {% if lang == null or lang == '' %}
+                {% assign lang = "es" %}
+                {% endif %}
                 <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
                     style="cursor: pointer; height: 30px; width: 30px" />
-
-                <!-- <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
-                    {% if lang == "es" %}
-                    <span>ES</span>
-                    {% elsif lang == "en" %}
-                    <span>EN</span>
-                    {% elsif lang == "pt" %}
-                    <span>PT</span>
-                    {% endif %}
-                </span> -->
-                <span>
-                    Esto es lang: {{ lang }}
-                    Esto es params: {{ params }}
-                    Esto es page.url: {{ page.url }}
-                </span>
-
-                <select id="language" onchange="updateLanguage()" style="
-                    display: none; /* Ocultar el select por defecto */
-                    padding: 3px;
-                    margin-top: 10px;
-                    border: 1px solid #000;
-                    border-radius: 5px;
-                    cursor: pointer;
-                ">
+                <select id="language" onchange="translateText(); closeLanguageSelector();" style="
+                        padding: 3px;
+                        margin-top: 10px;
+                        border: 1px solid #000;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    ">
                     <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
                     <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
                     <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
@@ -76,10 +57,10 @@
             </div>
 
             <div style="
-                flex-grow: 1;
-                box-sizing: border-box;
-                overflow-y: auto;
-            ">
+                        flex-grow: 1;
+                        box-sizing: border-box;
+                        overflow-y: auto;
+                    ">
                 {{ content }}
             </div>
 
@@ -94,14 +75,6 @@
                     languageSelector.style.display === ""
                     ? "inline-block"
                     : "none";
-        }
-
-        function updateLanguage() {
-            var select = document.getElementById("language");
-            var selectedLang = select.value;
-            var selectedLangText = select.options[select.selectedIndex].text;
-            document.getElementById("selectedLang").innerHTML = '<span>' + selectedLangText + '</span>';
-            // Aquí podrías añadir lógica adicional para actualizar la variable 'lang' en la URL o en el backend si es necesario
         }
     </script>
     {% include scripts.html %}
