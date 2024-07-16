@@ -41,6 +41,7 @@
                 >
                         {% assign params = page.url | split: '/' %}
                         {% assign lang = params[2] %}
+                        {{ page.url }}
                         {% if lang == null %}
                             {% assign lang = "es" %}
                         {% endif %}                  
