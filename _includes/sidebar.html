@@ -1,6 +1,6 @@
 <a href="javascript:void(0)" class="sg_sidebar_button"><i class="icon" data-icon="menu"></i></a>
 <div id="sgSidebar" class="sg_sidebar">
-  <p id="hideSidebarButton"  class="sg_sidebar_close_button"></p>
+  <p id="hideSidebarButton" class="sg_sidebar_close_button"></p>
 
 
   <a href="{{ site.baseurl }}/index.html" class="logo">
@@ -22,11 +22,22 @@
   <a href="https://docs.arandasoft.com/" class="">Home</a></li>
   {% endif %}
 
+  {% assign params = page.url | split: '/' %}
+  {% assign lang = params[2] %}
+  {% if lang == null %}
+  {% assign lang = "es" %}
+  {% endif %}
+
+  <span>
+    esto es lang: {{ lang }}
+    esto es params: {{ params }}
+  </span>
+
   {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
   {% for item in site.data.sidebar[page.sidebar] %}
 
   <div class="group">
-    <div class="group_title collapsible " id="{{item.chapter}}-btn" >{{ item.title }}
+    <div class="group_title collapsible " id="{{item.chapter}}-btn">{{ item.title }}
       <span id="{{item.chapter}}-span">
         <img src="{{ site.baseurl }}/assets/images/ic_flecha.svg" width="13" alt="Collapse menú">
       </span>
