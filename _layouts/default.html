@@ -26,59 +26,59 @@
                     padding: 20px;
                     margin-left: 285px; /* Asegúrate de que coincida con el ancho del sidebar */
                 ">
+            {% assign params = page.url | split: '/' %}
+            {% assign lang = params[2] %}
+            {% if lang == null %}
+                {% assign lang = "es" %}
+            {% endif %}
+
             <div id="languageSelector" style="
-            position: absolute;
-            right: 45px;
-            top: 45px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        ">
+                position: absolute;
+                right: 45px;
+                top: 45px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            ">
 
                 <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt="" onclick="toggleLanguageSelector()"
                     style="cursor: pointer; height: 30px; width: 30px" />
-                
-                
+
                 <span id="selectedLang" style="margin-top: 10px; color: #5d9afc;">
                     {% if lang == "es" %}
-                    <span>ES</span>
+                        <span>ES</span>
                     {% elsif lang == "en" %}
-                    <span>EN</span>
+                        <span>EN</span>
                     {% elsif lang == "pt" %}
-                    <span>PT</span>
+                        <span>PT</span>
                     {% endif %}
                 </span>
+
                 <select id="language" onchange="translateText(); closeLanguageSelector()" style="
-                display: none; /* Ocultar el select por defecto */
-                padding: 3px;
-                margin-top: 10px;
-                border: 1px solid #000;
-                border-radius: 5px;
-                cursor: pointer;
-            ">{% assign params = page.url | split: '/' %}
-                {% assign lang = params[2] %}
-                {% if lang == null %}
-                {% assign lang = "es" %}
-                {% endif %}
+                    display: none; /* Ocultar el select por defecto */
+                    padding: 3px;
+                    margin-top: 10px;
+                    border: 1px solid #000;
+                    border-radius: 5px;
+                    cursor: pointer;
+                ">
                     <option value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
                     <option value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
                     <option value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
                     <!-- Agrega más opciones según tus necesidades -->
-                </select><span>
-                    esto es lang: {{ lang }}
-
-                    esto es param: {{ params }}
-
-                    esto es page.url: {{ page.url }}
+                </select>
+                <span>
+                    Esto es lang: {{ lang }}
+                    Esto es params: {{ params }}
+                    Esto es page.url: {{ page.url }}
                 </span>
             </div>
 
-
             <div style="
-                        flex-grow: 1;
-                        box-sizing: border-box;
-                        overflow-y: auto;
-                    ">
+                flex-grow: 1;
+                box-sizing: border-box;
+                overflow-y: auto;
+            ">
                 {{ content }}
             </div>
 
@@ -90,11 +90,10 @@
             var languageSelector = document.getElementById("language");
             languageSelector.style.display =
                 languageSelector.style.display === "none" ||
-                    languageSelector.style.display === ""
+                languageSelector.style.display === ""
                     ? "inline-block"
                     : "none";
         }
-
     </script>
     {% include scripts.html %}
 </body>
