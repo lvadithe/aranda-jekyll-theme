@@ -39,12 +39,13 @@
                         align-items: flex-end;
                     "
                 >
-                        {% assign params = page.url | split: '/' %}
+                        {% assign params = site.baseurl | split: '/' %}
                         {% assign lang = params[2] %}
-                        {{ page.url }}
+                        
                         {% if lang == null %}
                             {% assign lang = "es" %}
-                        {% endif %}                  
+                        {% endif %}  
+                        {{ lang }}                
                     <img
                         src="{{ site.baseurl }}/assets/images/ic_language.svg"
                         alt=""

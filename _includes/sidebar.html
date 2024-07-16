@@ -22,6 +22,10 @@
   <a href="https://docs.arandasoft.com/" class="">Home</a></li>
   {% endif %}
 
+  <p>side
+    {{ site.baseurl }}</p>
+  
+
   {% if page.sidebar and site.data.sidebar[page.sidebar] != null %}
   {% for item in site.data.sidebar[page.sidebar] %}
 
