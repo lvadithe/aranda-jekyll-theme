@@ -18,7 +18,13 @@
         var languageRegex = /\/(en|es|fr|de)$/; // Añade o quita códigos de idioma según sea necesario
         var cleanBaseUrl = jekyllBaseUrl.replace(languageRegex, '');
 
-        var newUrl = `${baseUrl}${cleanBaseUrl}/${selectedLanguage}`;
+        // Construye la URL dependiendo del idioma seleccionado
+        var newUrl;
+        if (selectedLanguage === 'es') {
+            newUrl = `${baseUrl}${cleanBaseUrl}`;
+        } else {
+            newUrl = `${baseUrl}${cleanBaseUrl}/${selectedLanguage}`;
+        }
 
         window.location.href = newUrl;
     });
