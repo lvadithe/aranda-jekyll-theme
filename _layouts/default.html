@@ -148,6 +148,7 @@
             var languageOptions = document.getElementById("language");
             var languageSelector = document.getElementById("languageSelector");
             var arrowIcon = document.getElementById("arrowIcon");
+            var langPrefix = document.getElementById("langPrefix");
 
             if (
                 event.target !== languageOptions &&
@@ -157,6 +158,7 @@
             ) {
                 languageOptions.style.display = "none";
                 arrowIcon.style.transform = ""; // Restablece la rotación de la flecha
+                langPrefix.style.display = "block"; // Muestra el prefijo del idioma
             }
         });
     </script>
