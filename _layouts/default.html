@@ -122,6 +122,35 @@
             }
         }
 
+        const translationText = {
+            es: {
+                text: ["Español", "Inglés", "Portugués"],
+            },
+            en: {
+                text: ["Spanish", "English", "Portuguese"],
+            },
+            pt: {
+                text: ["Espanhol", "Inglês", "Português"],
+            },
+        };
+
+        function updateLanguageOptions(lang) {
+            const languageOptionItems = document.querySelectorAll('.languageOptionItem');
+
+            if (languageOptionItems.length === 3) {
+                languageOptionItems.forEach((item, index) => {
+                    item.textContent = translationText[lang].text[index];
+                });
+            }
+        }
+
+        // Obtén el idioma de la URL o usa 'es' como predeterminado
+        const urlparams = window.location.pathname.split('/');
+        const langtranslate = urlparams[2] || 'es';
+
+        // Actualiza las opciones de idioma al cargar la página
+        updateLanguageOptions(langtranslate);
+
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
@@ -162,50 +191,6 @@
                 langPrefix.style.display = "block"; // Muestra el prefijo del idioma
             }
         });
-    </script>
-
-    <script>
-        const translation = {
-            es: {
-                textES: "Español",
-                textEN: "Inglés",
-                textPT: "Portugués",
-            },
-            en: {
-                textES: "Spanish",
-                textEN: "English",
-                textPT: "Portuguese",
-            },
-            pt: {
-                textES: "Espanhol",
-                textEN: "Inglês",
-                textPT: "Português",
-            },
-        };
-
-        function updateLanguageOptions(lang) {
-            // Asume que los elementos de opción de idioma están en el mismo orden que las claves en el objeto de traducción
-            const languageOptionItems = document.querySelectorAll('.languageOptionItem');
-
-            if (languageOptionItems.length === 3) {
-                languageOptionItems[0].textContent = translation[lang].textES;
-                languageOptionItems[1].textContent = translation[lang].textEN;
-                languageOptionItems[2].textContent = translation[lang].textPT;
-            }
-        }
-
-        // Obtén el idioma de la URL o usa 'es' como predeterminado
-        const params = window.location.pathname.split('/');
-        const lang = params[2] || 'es';
-
-        // Actualiza las opciones de idioma al cargar la página
-        updateLanguageOptions(lang);
-
-        // Asegúrate de definir la función changeLanguage para actualizar las opciones cuando el usuario seleccione un nuevo idioma
-        function changeLanguage(selectedLang) {
-            updateLanguageOptions(selectedLang);
-            // Aquí deberías agregar también la lógica para cambiar la URL o recargar la página con el nuevo idioma seleccionado
-        }
     </script>
     {% include scripts.html %}
 </body>
