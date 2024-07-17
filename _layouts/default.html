@@ -105,24 +105,6 @@
         </main>
     </div>
     <script>
-        const translation = {
-            es: {
-                es: "Español",
-                en: "Inglés",
-                pt: "Portugués"
-            },
-            en: {
-                es: "Spanish",
-                en: "English",
-                pt: "Portuguese"
-            },
-            pt: {
-                es: "Espanhol",
-                en: "Inglês",
-                pt: "Português"
-            }
-        };
-        
         function toggleLanguageSelector() {
             var languageOptions = document.getElementById("language");
             var langPrefix = document.getElementById("langPrefix");
@@ -176,7 +158,6 @@
             ) {
                 languageOptions.style.display = "none";
                 arrowIcon.style.transform = ""; // Restablece la rotación de la flecha
-                langPrefix.style.display = "block"; // Muestra el prefijo del idioma
             }
         });
     </script>
