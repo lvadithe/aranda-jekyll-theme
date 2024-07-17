@@ -11,10 +11,11 @@
 
         languageSelector.addEventListener("change", function () {
             var selectedLanguage = this.value;
+            console.log(selectedLanguage);
             var baseUrl = window.location.origin; // Obtener la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtener la URL base de Jekyll
 
-            // Eliminar el idioma por defecto si se selecciona
+            // Si el idioma seleccionado es el idioma por defecto, redirigir a la URL base sin idioma
             var newUrl;
             if (selectedLanguage === "es") {
                 newUrl = `${baseUrl}${jekyllBaseUrl}`;
