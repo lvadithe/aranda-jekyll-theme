@@ -141,8 +141,12 @@
 
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
-            var translationText = translation[lang][lang];
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+            // cambia el texto de las opciones de idioma
+            document.querySelectorAll(".languageOptionItem").forEach(function (option) {
+                var newLang = option.textContent;
+                option.textContent = translation[lang][newLang.toLowerCase()];
+            });
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
