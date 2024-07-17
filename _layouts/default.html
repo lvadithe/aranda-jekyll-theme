@@ -18,7 +18,8 @@
         }
 
         #language {
-            display: none; /* Ocultamos inicialmente las opciones */
+            display: none;
+            /* Ocultamos inicialmente las opciones */
             padding: 3px;
             margin-top: 10px;
             background-color: #F2F2F4;
@@ -89,9 +90,9 @@
                 </div>
 
                 <div id="language">
-                    <div class="languageOptionItem" onclick="changeLanguage('es')">Español</div>
-                    <div class="languageOptionItem" onclick="changeLanguage('en')">Inglés</div>
-                    <div class="languageOptionItem" onclick="changeLanguage('pt')">Portugués</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('es')" data-lang="es">Español</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('en')" data-lang="en">Inglés</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('pt')" data-lang="pt">Portugués</div>
                 </div>
             </div>
 
@@ -105,6 +106,24 @@
         </main>
     </div>
     <script>
+        const translation = {
+            es: {
+                es: "Español",
+                en: "Inglés",
+                pt: "Portugués"
+            },
+            en: {
+                es: "Spanish",
+                en: "English",
+                pt: "Portuguese"
+            },
+            pt: {
+                es: "Espanhol",
+                en: "Inglês",
+                pt: "Português"
+            }
+        };
+
         function toggleLanguageSelector() {
             var languageOptions = document.getElementById("language");
             var langPrefix = document.getElementById("langPrefix");
@@ -123,7 +142,16 @@
 
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
-            langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+            var selectedLanguage = translation[lang][lang]; // Obtiene la traducción dinámica del idioma seleccionado
+            langPrefix.textContent = selectedLanguage.toUpperCase(); // Actualiza el prefijo del idioma
+
+            var languageOptions = document.getElementById("language").querySelectorAll(".languageOptionItem");
+
+            // Itera sobre cada opción de idioma y actualiza el texto según la traducción correspondiente
+            languageOptions.forEach(function (option) {
+                var optionLang = option.getAttribute("data-lang");
+                option.textContent = translation[optionLang][lang];
+            });
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
@@ -142,6 +170,7 @@
 
             window.location.href = newUrl;
         }
+
 
         // Cerrar el selector de idioma si se hace clic fuera de él
         document.addEventListener("click", function (event) {
