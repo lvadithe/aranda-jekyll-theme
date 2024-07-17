@@ -20,11 +20,13 @@ layout: default
             {% if site.title != "Aranda Database" %}
 
             <div class="col-auto">
-                {% assign params = page.url | split: '/' %}
+                {% assign params = site.baseurl | split: '/' %}
                 {% assign lang = params[2] %}
+
                 {% if lang == null %}
                 {% assign lang = "es" %}
                 {% endif %}
+                {{ lang }}
                 <div class="pdf">
                     <a id="convertPDF" class="mb-2 ml-5"
                         href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf" download>
@@ -83,7 +85,7 @@ layout: default
 
 
     const params = window.location.pathname.split('/');
-    const lang = params[3] || 'es'; 
+    const lang = params[2] || 'es';
 
     const translatedText = translation[lang].download;
 
