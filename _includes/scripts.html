@@ -7,10 +7,11 @@
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    var languageSelector = document.getElementById("language");
 
-    languageSelector.addEventListener("change", function () {
-        var selectedLanguage = this.value;
+    function changeLanguage(lang) {
+        var langPrefix = document.getElementById("langPrefix");
+        langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+
         var baseUrl = window.location.origin; // Obtiene la URL base actual
         var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
 
@@ -20,14 +21,14 @@
 
         // Construye la URL dependiendo del idioma seleccionado
         var newUrl;
-        if (selectedLanguage === 'es') {
+        if (lang === 'es') {
             newUrl = `${baseUrl}${cleanBaseUrl}`;
         } else {
-            newUrl = `${baseUrl}${cleanBaseUrl}/${selectedLanguage}`;
+            newUrl = `${baseUrl}${cleanBaseUrl}/${lang}`;
         }
 
         window.location.href = newUrl;
-    });
+    }
 
     closeLanguageSelector();
 });

@@ -80,15 +80,15 @@
                             width: 120px;
                             height: 150px;
                         ">
-                    <option
+                    <div onclick="changeLanguage('es')"
                         style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="es" {% if lang=="es" %} selected {% endif %}>Español</option>
-                    <option
+                        value="es" {% if lang=="es" %} selected {% endif %}>Español</div>
+                    <div onclick="changeLanguage('en')"
                         style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="en" {% if lang=="en" %} selected {% endif %}>Inglés</option>
-                    <option
+                        value="en" {% if lang=="en" %} selected {% endif %}>Inglés</div>
+                    <div onclick="changeLanguage('pt')"
                         style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</option>
+                        value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</div>
                 </div>
             </div>
 
