@@ -18,7 +18,8 @@
         }
 
         #language {
-            display: none; /* Ocultamos inicialmente las opciones */
+            display: none;
+            /* Ocultamos inicialmente las opciones */
             padding: 3px;
             margin-top: 10px;
             background-color: #F2F2F4;
@@ -124,6 +125,18 @@
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+
+            var languageOptionsTranslations = {
+                es: ["Español", "Inglés", "Portugués"],
+                en: ["Spanish", "English", "Portuguese"],
+                pt: ["Espanhol", "Inglês", "Português"]
+            };
+            // cambia el texto de las opciones de idioma
+            languageOptionsTranslations[lang].forEach((translation, index) => {
+                document.getElementsByClassName("languageOptionItem")[index].textContent = translation;
+            });
+
+            console.log("Cambiando a idioma: " + lang);
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
