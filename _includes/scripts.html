@@ -10,18 +10,12 @@
         var languageSelector = document.getElementById("language");
 
         languageSelector.addEventListener("change", function () {
+            // si esta en español no le pega a nada /adm
             var selectedLanguage = this.value;
-            console.log(selectedLanguage);
-            var baseUrl = window.location.origin; // Obtener la URL base actual
-            var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtener la URL base de Jekyll
-
-            // Si el idioma seleccionado es el idioma por defecto, redirigir a la URL base sin idioma
-            var newUrl;
-            if (selectedLanguage === "es") {
-                newUrl = `${baseUrl}${jekyllBaseUrl}`;
-            } else {
-                newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}`;
-            }
+            var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
+            var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
+            var newUrl = selectedLanguage === "es" ? `${baseUrl}${jekyllBaseUrl}` :
+                `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}`;
 
             window.location.href = newUrl;
         });
@@ -31,7 +25,7 @@
 
     function closeLanguageSelector() {
         var languageSelector = document.getElementById("language");
-        languageSelector.style.display = "none"; // Ocultar el selector después de seleccionar una opción
+        languageSelector.style.display = "none"; // Oculta el selector después de seleccionar una opción
     }
 
     // Cerrar el selector de idioma si se hace clic fuera de él
@@ -39,10 +33,12 @@
         var languageSelector = document.getElementById("language");
         var languageImage = document.querySelector("#languageSelector img");
 
-        if (event.target !== languageSelector && event.target !== languageImage) {
+        if (
+            event.target !== languageSelector &&
+            event.target !== languageImage
+        ) {
             // Si se hace clic fuera del selector
             languageSelector.style.display = "none";
         }
     });
-
 </script>
