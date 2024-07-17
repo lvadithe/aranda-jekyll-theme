@@ -105,6 +105,24 @@
         </main>
     </div>
     <script>
+        const translation = {
+            es: {
+                es: "Español",
+                en: "Inglés",
+                pt: "Portugués"
+            },
+            en: {
+                es: "Spanish",
+                en: "English",
+                pt: "Portuguese"
+            },
+            pt: {
+                es: "Espanhol",
+                en: "Inglês",
+                pt: "Português"
+            }
+        };
+
         function toggleLanguageSelector() {
             var languageOptions = document.getElementById("language");
             var langPrefix = document.getElementById("langPrefix");
@@ -123,6 +141,7 @@
 
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
+            var translationText = translation[lang][lang];
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
