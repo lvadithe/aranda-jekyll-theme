@@ -26,7 +26,6 @@ layout: default
                 {% if lang == null %}
                 {% assign lang = "es" %}
                 {% endif %}
-                {{ lang }}
                 <div class="pdf">
                     <a id="convertPDF" class="mb-2 ml-5"
                         href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf" download>
