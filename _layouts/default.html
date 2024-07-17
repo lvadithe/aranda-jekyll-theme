@@ -18,17 +18,32 @@
         }
 
         #language {
-            z-index: 0;
-            /* Asegura que el select esté debajo del div */
+            display: none; /* Ocultamos inicialmente las opciones */
+            padding: 3px;
+            margin-top: 10px;
+            background-color: #F2F2F4;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+            right: 30px;
+            top: 75px;
+            width: 120px;
+            max-height: 150px;
+            overflow-y: auto;
         }
 
-        /* Estilo para la transición de la flecha */
-        #arrowIcon {
-            transition: transform 0.3s ease;
-            /* Ajusta la duración y tipo de transición según tus preferencias */
+        .languageOptionItem {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: #0865D0;
+            font-size: 20px;
+            padding-right: 16px;
+            cursor: pointer;
         }
 
-        #language option:hover {
+        .languageOptionItem:hover {
             background-color: #EDEDF6;
             /* Color de fondo cuando se hace hover */
         }
@@ -68,27 +83,10 @@
                         style="height: 13px; width: 13px;" />
                 </div>
 
-                <div id="language" onchange="translateText(); closeLanguageSelector();" style="
-                            padding: 3px;
-                            margin-top: 10px;
-                            background-color: #F2F2F4;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            position: absolute;
-                            right: 30px;
-                            top: 75px;
-                            width: 120px;
-                            height: 150px;
-                        ">
-                    <div onclick="changeLanguage('es')"
-                        style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="es" {% if lang=="es" %} selected {% endif %}>Español</div>
-                    <div onclick="changeLanguage('en')"
-                        style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="en" {% if lang=="en" %} selected {% endif %}>Inglés</div>
-                    <div onclick="changeLanguage('pt')"
-                        style="height: 50px; display: flex; align-items: center; justify-content: flex-end; color: #0865D0; font-size: 20px; padding-right: 16px;"
-                        value="pt" {% if lang=="pt" %} selected {% endif %}>Portugués</div>
+                <div id="language">
+                    <div class="languageOptionItem" onclick="changeLanguage('es')">Español</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('en')">Inglés</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('pt')">Portugués</div>
                 </div>
             </div>
 
@@ -103,19 +101,56 @@
     </div>
     <script>
         function toggleLanguageSelector() {
-            var languageSelector = document.getElementById("language");
-            var langPrefix = document.getElementById("langPrefix");
+            var languageOptions = document.getElementById("language");
             var arrowIcon = document.getElementById("arrowIcon");
-            if (languageSelector.style.display === "none" || languageSelector.style.display === "") {
-                languageSelector.style.display = "block";
-                langPrefix.style.display = "none"; // Oculta el prefijo del idioma
+
+            if (languageOptions.style.display === "none" || languageOptions.style.display === "") {
+                languageOptions.style.display = "block";
                 arrowIcon.style.transform = "rotate(180deg)"; // Rota la flecha hacia arriba
             } else {
-                languageSelector.style.display = "none";
-                langPrefix.style.display = "block"; // Muestra el prefijo del idioma
+                languageOptions.style.display = "none";
                 arrowIcon.style.transform = ""; // Restablece la rotación de la flecha
             }
         }
+
+        function changeLanguage(lang) {
+            var langPrefix = document.getElementById("langPrefix");
+            langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+
+            var baseUrl = window.location.origin; // Obtiene la URL base actual
+            var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
+
+            // Remueve el segmento de idioma existente de la URL (asumiendo que está al final)
+            var languageRegex = /\/(en|es|pt)$/; // Añade o quita códigos de idioma según sea necesario
+            var cleanBaseUrl = jekyllBaseUrl.replace(languageRegex, '');
+
+            // Construye la URL dependiendo del idioma seleccionado
+            var newUrl;
+            if (lang === 'es') {
+                newUrl = `${baseUrl}${cleanBaseUrl}`;
+            } else {
+                newUrl = `${baseUrl}${cleanBaseUrl}/${lang}`;
+            }
+
+            window.location.href = newUrl;
+        }
+
+        // Cerrar el selector de idioma si se hace clic fuera de él
+        document.addEventListener("click", function (event) {
+            var languageOptions = document.getElementById("language");
+            var languageSelector = document.getElementById("languageSelector");
+            var arrowIcon = document.getElementById("arrowIcon");
+
+            if (
+                event.target !== languageOptions &&
+                event.target !== languageSelector &&
+                !languageOptions.contains(event.target) &&
+                !languageSelector.contains(event.target)
+            ) {
+                languageOptions.style.display = "none";
+                arrowIcon.style.transform = ""; // Restablece la rotación de la flecha
+            }
+        });
     </script>
     {% include scripts.html %}
 </body>
