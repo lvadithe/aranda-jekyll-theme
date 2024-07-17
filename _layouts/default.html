@@ -127,16 +127,30 @@
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
 
             var languageOptionsTranslations = {
-                es: ["Español", "Inglés", "Portugués"],
-                en: ["Spanish", "English", "Portuguese"],
-                pt: ["Espanhol", "Inglês", "Português"]
+                es: {
+                    textES: "Español",
+                    textEN: "Inglés",
+                    textPT: "Portugués"
+                },
+                en: {
+                    textES: "Spanish",
+                    textEN: "English",
+                    textPT: "Portuguese"
+                },
+                pt: {
+                    textES: "Espanhol",
+                    textEN: "Inglês",
+                    textPT: "Português"
+                }
             };
-            // cambia el texto de las opciones de idioma
-            languageOptionsTranslations[lang].forEach((translation, index) => {
-                document.getElementsByClassName("languageOptionItem")[index].textContent = translation;
-            });
-
-            console.log("Cambiando a idioma: " + lang);
+            
+            var languageOptions = document.getElementById("language");
+            var languageOptionItems = languageOptions.getElementsByClassName("languageOptionItem");
+            for (var i = 0; i < languageOptionItems.length; i++) {
+                var languageOptionItem = languageOptionItems[i];
+                var language = languageOptionItem.textContent.trim().toLowerCase();
+                languageOptionItem.textContent = languageOptionsTranslations[lang]["text" + language.toUpperCase()];
+            }
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
