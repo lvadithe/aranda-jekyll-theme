@@ -107,13 +107,16 @@
     <script>
         function toggleLanguageSelector() {
             var languageOptions = document.getElementById("language");
+            var langPrefix = document.getElementById("langPrefix");
             var arrowIcon = document.getElementById("arrowIcon");
 
             if (languageOptions.style.display === "none" || languageOptions.style.display === "") {
                 languageOptions.style.display = "block";
+                langPrefix.style.display = "none"; // Oculta el prefijo del idioma
                 arrowIcon.style.transform = "rotate(180deg)"; // Rota la flecha hacia arriba
             } else {
                 languageOptions.style.display = "none";
+                langPrefix.style.display = "block"; // Muestra el prefijo del idioma
                 arrowIcon.style.transform = ""; // Restablece la rotación de la flecha
             }
         }
