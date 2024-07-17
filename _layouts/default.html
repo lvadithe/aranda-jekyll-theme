@@ -89,9 +89,9 @@
                 </div>
 
                 <div id="language">
-                    <div class="languageOptionItem" onclick="changeLanguage('es')" data-lang="es">Español</div>
-                    <div class="languageOptionItem" onclick="changeLanguage('en')" data-lang="en">Inglés</div>
-                    <div class="languageOptionItem" onclick="changeLanguage('pt')" data-lang="pt">Portugués</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('es')">Español</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('en')">Inglés</div>
+                    <div class="languageOptionItem" onclick="changeLanguage('pt')">Portugués</div>
                 </div>
             </div>
 
@@ -122,7 +122,7 @@
                 pt: "Português"
             }
         };
-
+        
         function toggleLanguageSelector() {
             var languageOptions = document.getElementById("language");
             var langPrefix = document.getElementById("langPrefix");
@@ -141,13 +141,7 @@
 
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
-            var selectedLanguage = translation[lang][lang];
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
-            // cambia el texto de los elementos de la lista
-            document.querySelectorAll(".languageOptionItem").forEach(function (item) {
-                var dataLang = item.getAttribute("data-lang");
-                item.textContent = translation[lang][dataLang];
-            });
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
@@ -156,7 +150,6 @@
             var languageRegex = /\/(en|es|pt)$/; // Añade o quita códigos de idioma según sea necesario
             var cleanBaseUrl = jekyllBaseUrl.replace(languageRegex, '');
 
-            
             // Construye la URL dependiendo del idioma seleccionado
             var newUrl;
             if (lang === 'es') {
