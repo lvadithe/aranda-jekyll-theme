@@ -16,7 +16,7 @@
             z-index: 2;
             /* Este div estará encima del select */
         }
-
+       
         #language {
             display: none;
             /* Ocultamos inicialmente las opciones */
@@ -28,18 +28,17 @@
             position: absolute;
             right: 0;
             top: 35px;
-            width: 120px;
-            max-height: 150px;
-            overflow-y: auto;
+            width: 118px;
+            height: 125px;
         }
 
         .languageOptionItem {
-            height: 50px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             color: #0865D0;
-            font-size: 20px;
+            font-size: 16px;
             padding-right: 16px;
             cursor: pointer;
         }
@@ -80,11 +79,11 @@
                 {% if lang == null %}
                 {% assign lang = "es" %}
                 {% endif %}
-                <div style="display: flex; flex-direction: row; gap: 6px; align-items: center; cursor: pointer; position: absolute; top: 12px; width: max-content;"
+                <div style="display: flex; flex-direction: row; gap: 6px; align-items: center; cursor: pointer; position: absolute; top: 12px; right: 15px; width: max-content;"
                     onclick="toggleLanguageSelector()">
                     <img src="{{ site.baseurl }}/assets/images/ic_language.svg" alt=""
-                        style="height: 30px; width: 30px;" />
-                    <span id="langPrefix" style="font-size: 20px; color: #0865D0;">{{ lang | upcase }}</span>
+                        style="height: 25px; width: 25px;" />
+                    <span id="langPrefix" style="font-size: 16px; color: #0865D0;">{{ lang | upcase }}</span>
                     <img id="arrowIcon" src="{{ site.baseurl }}/assets/images/ic_arrow_up.svg" alt=""
                         style="height: 13px; width: 13px;" />
                 </div>
