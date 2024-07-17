@@ -18,8 +18,7 @@
         }
 
         #language {
-            display: none;
-            /* Ocultamos inicialmente las opciones */
+            display: none; /* Ocultamos inicialmente las opciones */
             padding: 3px;
             margin-top: 10px;
             background-color: #F2F2F4;
@@ -142,15 +141,12 @@
 
         function changeLanguage(lang) {
             var langPrefix = document.getElementById("langPrefix");
-            var selectedLanguage = translation[lang][lang]; // Obtiene la traducción dinámica del idioma seleccionado
-            langPrefix.textContent = selectedLanguage.toUpperCase(); // Actualiza el prefijo del idioma
-
-            var languageOptions = document.getElementById("language").querySelectorAll(".languageOptionItem");
-
-            // Itera sobre cada opción de idioma y actualiza el texto según la traducción correspondiente
-            languageOptions.forEach(function (option) {
-                var optionLang = option.getAttribute("data-lang");
-                option.textContent = translation[optionLang][lang];
+            var selectedLanguage = translation[lang][lang];
+            langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
+            // cambia el texto de los elementos de la lista
+            document.querySelectorAll(".languageOptionItem").forEach(function (item) {
+                var dataLang = item.getAttribute("data-lang");
+                item.textContent = translation[lang][dataLang];
             });
 
             var baseUrl = window.location.origin; // Obtiene la URL base actual
@@ -160,6 +156,7 @@
             var languageRegex = /\/(en|es|pt)$/; // Añade o quita códigos de idioma según sea necesario
             var cleanBaseUrl = jekyllBaseUrl.replace(languageRegex, '');
 
+            
             // Construye la URL dependiendo del idioma seleccionado
             var newUrl;
             if (lang === 'es') {
@@ -170,7 +167,6 @@
 
             window.location.href = newUrl;
         }
-
 
         // Cerrar el selector de idioma si se hace clic fuera de él
         document.addEventListener("click", function (event) {
