@@ -7,37 +7,31 @@
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var languageSelector = document.getElementById("language");
+    var languageSelector = document.getElementById("language");
 
-        languageSelector.addEventListener("change", function () {
-            var selectedLanguage = this.value;
-            var baseUrl = window.location.origin;
-            var jekyllBaseUrl = "{{ site.baseurl }}";
-            var pathName = window.location.pathname.replace(jekyllBaseUrl, "");
+    languageSelector.addEventListener("change", function () {
+        var selectedLanguage = this.value;
+        var baseUrl = window.location.origin;
+        var jekyllBaseUrl = "{{ site.baseurl }}".replace(/\/$/, ""); // Asegura que no haya una barra al final
+        var pathName = window.location.pathname.replace(jekyllBaseUrl, "").replace(/^\//, ""); // Elimina la barra inicial
 
-            // Limpia el pathName para asegurarse de que no haya segmentos de idioma
-            var newPathName = pathName.split('/').filter(function (segment) {
-                return segment && segment !== "es" && segment !== "en";
-            }).join('/');
+        // Limpia el pathName para asegurarse de que no haya segmentos de idioma
+        var newPathName = pathName.split('/').filter(function (segment) {
+            return segment && segment !== "es" && segment !== "en";
+        }).join('/');
 
-            // Asegura que el newPathName comience con una barra si no está vacío
-            if (newPathName && !newPathName.startsWith('/')) {
-                newPathName = '/' + newPathName;
-            }
+        // Construye la nueva URL correctamente para cada idioma
+        var newUrl = baseUrl + jekyllBaseUrl;
+        if (selectedLanguage !== "en") { // Si el idioma seleccionado no es inglés, añade el segmento de idioma
+            newUrl += (newPathName ? "/" : "") + newPathName;
+        } else { // Para inglés, asegura que el segmento de idioma no se añada
+            newUrl += "/en" + (newPathName ? "/" : "") + newPathName;
+        }
 
-            // Construye la nueva URL correctamente para español sin duplicar el segmento del idioma
-            var newUrl;
-            if (selectedLanguage === "es") {
-                newUrl = `${baseUrl}${jekyllBaseUrl}${newPathName}`;
-            } else {
-                // Asegura que el newPathName no duplique el segmento del idioma para otros idiomas
-                newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}${newPathName}`;
-            }
-
-            console.warn("newUrl", newUrl, "selectedLanguage", selectedLanguage);
-            window.location.href = newUrl;
-        });
+        console.warn("newUrl", newUrl, "selectedLanguage", selectedLanguage);
+        window.location.href = newUrl;
     });
+});
 
     function closeLanguageSelector() {
         var languageSelector = document.getElementById("language");
