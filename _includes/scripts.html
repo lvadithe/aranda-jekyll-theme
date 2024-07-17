@@ -7,20 +7,24 @@
 <script src="{{ site.baseurl }}/assets/js/modules/handleCopyClick.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var languageSelector = document.getElementById("language");
+    var languageSelector = document.getElementById("language");
 
-        languageSelector.addEventListener("change", function () {
-            // si esta en español no le pega a nada /adm
-            var selectedLanguage = this.value;
-            var baseUrl = window.location.origin; // Obtiene la URL base actual (ej. http://127.0.0.1:4000 o la URL de producción)
-            var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll (ej. /aranda-docs)
-            var newUrl = `${baseUrl}${jekyllBaseUrl}/${selectedLanguage}`;
+    languageSelector.addEventListener("change", function () {
+        var selectedLanguage = this.value;
+        var baseUrl = window.location.origin; // Obtiene la URL base actual
+        var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
 
-            window.location.href = newUrl;
-        });
-        
-        closeLanguageSelector();
+        // Remueve el segmento de idioma existente de la URL (asumiendo que está al final)
+        var languageRegex = /\/(en|es|fr|de)$/; // Añade o quita códigos de idioma según sea necesario
+        var cleanBaseUrl = jekyllBaseUrl.replace(languageRegex, '');
+
+        var newUrl = `${baseUrl}${cleanBaseUrl}/${selectedLanguage}`;
+
+        window.location.href = newUrl;
     });
+
+    closeLanguageSelector();
+});
 
     function closeLanguageSelector() {
         var languageSelector = document.getElementById("language");
