@@ -18,8 +18,7 @@
         }
 
         #language {
-            display: none;
-            /* Ocultamos inicialmente las opciones */
+            display: none; /* Ocultamos inicialmente las opciones */
             padding: 3px;
             margin-top: 10px;
             background-color: #F2F2F4;
@@ -126,20 +125,6 @@
             var langPrefix = document.getElementById("langPrefix");
             langPrefix.textContent = lang.toUpperCase(); // Cambia el texto del prefijo de idioma
 
-            // Actualiza el texto de las opciones de idioma de forma explícita
-            var languageOptions = {
-                es: ["Español", "Inglés", "Portugués"],
-                en: ["Spanish", "English", "Portuguese"],
-                pt: ["Espanhol", "Inglês", "Português"]
-            };
-
-            var options = document.querySelectorAll(".languageOptionItem");
-            if (options.length === 3) { // Asegura que hay tres opciones
-                options[0].textContent = languageOptions[lang][0];
-                options[1].textContent = languageOptions[lang][1];
-                options[2].textContent = languageOptions[lang][2];
-            }
-
             var baseUrl = window.location.origin; // Obtiene la URL base actual
             var jekyllBaseUrl = "{{ site.baseurl }}"; // Obtiene la URL base de Jekyll
 
@@ -163,7 +148,6 @@
             var languageOptions = document.getElementById("language");
             var languageSelector = document.getElementById("languageSelector");
             var arrowIcon = document.getElementById("arrowIcon");
-            var langPrefix = document.getElementById("langPrefix");
 
             if (
                 event.target !== languageOptions &&
