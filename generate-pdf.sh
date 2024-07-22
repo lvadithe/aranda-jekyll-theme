@@ -45,9 +45,8 @@ do
 
     # Extract the PDF file path from the .md file and adjust the name
     PDF_PATH=$(grep "pdf: " "$line" | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
-    PDF_NAME=$(basename "$PDF_PATH" .pdf)
-    PDF_NAME_CLEANED=$(dirname "$PDF_PATH")/$(basename "$(dirname "$PDF_PATH")").pdf
+    PDF_NAME=$(basename "$(dirname "$PDF_PATH")").pdf
 
     # Append the PDF name to pdf.md
-    echo -e "\n### $PDF_NAME_CLEANED\n" >> _pages/pdf.md
+    echo -e "\n### $PDF_NAME\n" >> _pages/pdf.md
 done
