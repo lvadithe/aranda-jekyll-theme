@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Remove existing pdf.md to create new file
 rm _pages/pdf.md
 
@@ -17,37 +19,40 @@ layout: pdf
 # Running through list of files $FILES to then open it and concat with pdf.md
 for line in $FILES
 do
-    # Getting chapter name to write as a title inside pdf.md. Search the line that contains "excerpt: " and parse text to get only name
-    CHAPTER=$(grep "excerpt: " $line | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
+    # Adjust paths and write inside pdf.md from below line number to eof
+    sed 's/\/en\///g' "$line" | {
+        # Getting chapter name to write as a title inside pdf.md. Search the line that contains "excerpt: " and parse text to get only name
+        CHAPTER=$(grep "excerpt: " | cut -d ":" -f2- | tr -d '"' | cut -d " " -f2-)
 
-    # Check if this chapter  exists in pdf.md to avoid repeated names in case the chapter markdown contains this name
-    EXISTS_CHAPTER=$(grep "$CHAPTER" _pages/pdf.md | wc -w)
+        # Check if this chapter exists in pdf.md to avoid repeated names in case the chapter markdown contains this name
+        EXISTS_CHAPTER=$(grep "$CHAPTER" _pages/pdf.md | wc -l)
 
-    # Skip the main markdown. The Introduction chapter and Main contain the same prologue.
-    if [[ $CHAPTER != "Inicio" ]]
-    then
-        # Write chapter if not exists
-        if [ $EXISTS_CHAPTER -eq 0 ]
+        # Skip the main markdown. The Introduction chapter and Main contain the same prologue.
+        if [[ "$CHAPTER" != "Inicio" ]]
         then
-            echo $CHAPTER
-            echo "\n# $CHAPTER" >> _pages/pdf.md
+            # Write chapter if not exists
+            if [ $EXISTS_CHAPTER -eq 0 ]
+            then
+                echo $CHAPTER
+                echo "\n# $CHAPTER" >> _pages/pdf.md
+            fi
         fi
-    fi
 
-    # Getting manual title to write inside pdf.md. Search the line that contains "title: " and parse text to get only name
-    TITLE=$(grep "title: " $line | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
-    # Check if manual title exiss
-    EXISTS_TITLE=$(grep "$TITLE" _pages/pdf.md | wc -w)
+        # Getting manual title to write inside pdf.md. Search the line that contains "title: " and parse text to get only name
+        TITLE=$(grep "title: " | cut -d ":" -f2- | tr -d '"' | cut -d " " -f2-)
+        # Check if manual title exists
+        EXISTS_TITLE=$(grep "$TITLE" _pages/pdf.md | wc -l)
 
-    if [ $EXISTS_TITLE -eq 0 ]
-    then
-        echo "\n## $TITLE" >> _pages/pdf.md
-    fi
+        if [ $EXISTS_TITLE -eq 0 ]
+        then
+            echo "\n## $TITLE" >> _pages/pdf.md
+        fi
 
-    # Find the line where the comments end
-    FROM=$(grep -n "\b---\b" $line | tail -1 | cut -d ":" -f1)
-    FROM=$(($FROM + 1))
+        # Find the line where the comments end
+        FROM=$(grep -n "\b---\b" | tail -1 | cut -d ":" -f1)
+        FROM=$(($FROM + 1))
 
-    # Write inside pdf.md from below line number to eof
-    tail -n +$FROM $line | sed 's/\/en\///g' >> _pages/pdf.md
+        # Write inside pdf.md from below line number to eof
+        tail -n +$FROM >> _pages/pdf.md
+    }
 done
