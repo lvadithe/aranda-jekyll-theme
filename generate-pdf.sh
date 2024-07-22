@@ -49,5 +49,5 @@ do
     FROM=$(($FROM + 1))
 
     # Write inside pdf.md from below line number to eof
-    tail -n +$FROM $line >> _pages/pdf.md
+    tail -n +$FROM $line | sed 's/\/en\///g' >> _pages/pdf.md
 done
