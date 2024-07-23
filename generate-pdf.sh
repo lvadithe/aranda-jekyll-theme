@@ -50,6 +50,7 @@ do
 
     # Write inside pdf.md from below line number to eof
     tail -n +$FROM $line >> _pages/pdf.md
+done
 
 # A partir de aquí, el nuevo código para eliminar los prefijos "en"
 # Asegúrate de ejecutar este bloque después de que todas las operaciones de PDF estén completas
