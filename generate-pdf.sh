@@ -51,6 +51,12 @@ do
     # Remove 'en/' prefix from the file path
     line=$(echo $line | sed 's|/en/|/|g')
 
+    # Read the content from the file starting from the line after the front matter
+    CONTENT=$(tail -n +$FROM $line)
+
+    # Modify paths within the content to remove the 'en/' prefix
+    MODIFIED_CONTENT=$(echo "$CONTENT" | sed 's|/en/|/|g')
+
     # Write inside pdf.md from below line number to eof
     tail -n +$FROM $line >> _pages/pdf.md
 done
