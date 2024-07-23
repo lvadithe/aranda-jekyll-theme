@@ -51,21 +51,3 @@ do
     # Write inside pdf.md from below line number to eof
     tail -n +$FROM $line >> _pages/pdf.md
 done
-
-# Eliminar prefijos "en" de directorios y archivos
-find . -type d -name 'en*' | while read dir; do
-    # Renombrar directorios, eliminando el prefijo "en/"
-    newdir=$(echo "$dir" | sed 's|/en/|/|; s|/en$||')
-    if [ "$dir" != "$newdir" ]; then  # Verificar que la ruta no sea la misma
-        mv "$dir" "$newdir"
-    fi
-done
-
-find . -type f -path '*en*' | while read file; do
-    # Mover archivos, eliminando el prefijo "en/" de la ruta
-    newfile=$(echo "$file" | sed 's|/en/|/|; s|/en$||')
-    if [ "$file" != "$newfile" ]; then  # Verificar que la ruta no sea la misma
-        mkdir -p "$(dirname "$newfile")" # Asegurar que el directorio destino existe
-        mv "$file" "$newfile"
-    fi
-done
