@@ -48,6 +48,9 @@ do
     FROM=$(grep -n "\b---\b" $line | tail -1 | cut -d ":" -f1)
     FROM=$(($FROM + 1))
 
+    # Remove 'en/' prefix from the file path
+    line=$(echo $line | sed 's|/en/|/|g')
+
     # Write inside pdf.md from below line number to eof
     tail -n +$FROM $line >> _pages/pdf.md
 done
