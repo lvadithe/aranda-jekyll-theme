@@ -2,7 +2,7 @@
 rm _pages/pdf.md
 
 # list all files ending with .md in the _page directory sorting by numerical order starting from second field separated by "/"
-FILES=$(find _pages -type f -name "*.md" | sort -t '/' -k 2n)
+FILES=$(find _pages -type f -name "*.md" | grep -v "/en/" | sort -t '/' -k 2n)
 
 # Getting manual name from index.md
 MANUALNAME=$(grep 'title' _pages/index.md)
