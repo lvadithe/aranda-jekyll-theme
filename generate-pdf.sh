@@ -48,15 +48,22 @@ do
     FROM=$(grep -n "\b---\b" $line | tail -1 | cut -d ":" -f1)
     FROM=$(($FROM + 1))
 
-    # Remove 'en/' prefix from the file path
-    line=$(echo $line | sed 's|/en/|/|g')
-
-    # Read the content from the file starting from the line after the front matter
-    CONTENT=$(tail -n +$FROM $line)
-
-    # Modify paths within the content to remove the 'en/' prefix
-    MODIFIED_CONTENT=$(echo "$CONTENT" | sed 's|/en/|/|g')
-
     # Write inside pdf.md from below line number to eof
     tail -n +$FROM $line >> _pages/pdf.md
+
+# A partir de aquí, el nuevo código para eliminar los prefijos "en"
+# Asegúrate de ejecutar este bloque después de que todas las operaciones de PDF estén completas
+
+# Eliminar prefijos "en" de directorios y archivos
+find . -type d -name 'en*' | while read dir; do
+    # Renombrar directorios, eliminando el prefijo "en/"
+    newdir=$(echo "$dir" | sed 's|/en/|/|; s|/en$||')
+    mv "$dir" "$newdir"
+done
+
+find . -type f -path '*en*' | while read file; do
+    # Mover archivos, eliminando el prefijo "en/" de la ruta
+    newfile=$(echo "$file" | sed 's|/en/|/|; s|/en$||')
+    mkdir -p "$(dirname "$newfile")" # Asegurar que el directorio destino existe
+    mv "$file" "$newfile"
 done
