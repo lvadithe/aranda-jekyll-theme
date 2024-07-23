@@ -14,13 +14,13 @@ permalink: /pdf
 layout: pdf
 ---" > _pages/pdf.md
 
-# Running through list of files $FILES to concatenate them into pdf.md
+# Running through list of files $FILES to then open it and concat with pdf.md
 for line in $FILES
 do
     # Getting chapter name to write as a title inside pdf.md. Search the line that contains "excerpt: " and parse text to get only name
     CHAPTER=$(grep "excerpt: " $line | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
 
-    # Check if this chapter exists in pdf.md to avoid repeated names in case the chapter markdown contains this name
+    # Check if this chapter  exists in pdf.md to avoid repeated names in case the chapter markdown contains this name
     EXISTS_CHAPTER=$(grep "$CHAPTER" _pages/pdf.md | wc -w)
 
     # Skip the main markdown. The Introduction chapter and Main contain the same prologue.
@@ -36,7 +36,7 @@ do
 
     # Getting manual title to write inside pdf.md. Search the line that contains "title: " and parse text to get only name
     TITLE=$(grep "title: " $line | cut -d ":" -f2 | tr -d '"' | cut -d " " -f2-)
-    # Check if manual title exists
+    # Check if manual title exiss
     EXISTS_TITLE=$(grep "$TITLE" _pages/pdf.md | wc -w)
 
     if [ $EXISTS_TITLE -eq 0 ]
@@ -49,5 +49,5 @@ do
     FROM=$(($FROM + 1))
 
     # Write inside pdf.md from below line number to eof
-    tail -n +$FROM $line | sed -e 's#/en\?/##g' -e 's#/en\?##g' >> _pages/pdf.md
+    tail -n +$FROM $line >> _pages/pdf.md
 done
