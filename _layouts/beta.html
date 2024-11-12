@@ -5,7 +5,7 @@ layout: default
 <header id="mastheadArea" class="sg_masthead">
     <div class="sg_contain">
         <div class="head">
-            {% include GA_Script.html %}
+            {% include GA_Script.html %} {% include search-box.html %}
             <!--Buscador Aranda docs-->
             <div class="row no-gutters">
                 <!--<div class="col searchbar-container">
@@ -19,22 +19,22 @@ layout: default
                     <div id="search_result"></div>
                 </div>-->
 
-            <div class="col-auto">
+                <div class="col-auto">
                     <div class="pdf">
-                     <a
-                        id="convertPDF"
-                        class="mb-2 ml-5"
-                        href="{{ site.baseurl }}/assets/docs.pdf"
-                        download
-                      >
-                        <img
-                            src="{{ site.baseurl }}/assets/images/icon-pdf.svg"
-                            width="64"
-                            alt="Adobe PDF"
-                            id="pdf-ic"
-                        />
-                       <h1>Descargar PDF</h1>
-                     </a>
+                        <a
+                            id="convertPDF"
+                            class="mb-2 ml-5"
+                            href="{{ site.baseurl }}/assets/docs.pdf"
+                            download
+                        >
+                            <img
+                                src="{{ site.baseurl }}/assets/images/icon-pdf.svg"
+                                width="64"
+                                alt="Adobe PDF"
+                                id="pdf-ic"
+                            />
+                            <h1>Descargar PDF</h1>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,6 @@ layout: default
         {% endif %}
     </div>
 </header>
-
 
 <article id="documentationArea" class="sg_doc">
     <div class="sg_post" id="post-content">
