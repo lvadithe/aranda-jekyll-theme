@@ -6,7 +6,6 @@ layout: default
     <div class="sg_contain">
         <div class="head">
             {% include GA_Script.html %}
-
             <!--Buscador Aranda docs-->
             <div class="row no-gutters">
                 <!--<div class="col searchbar-container">
@@ -25,7 +24,7 @@ layout: default
                      <a
                         id="convertPDF"
                         class="mb-2 ml-5"
-                        href="{{ site.baseurl }}/assets/docs.pdf"
+                        href="{{ site.baseurl }}/assets/{{site.baseurl | remove_first: '/'}}.pdf"
                         download
                       >
                         <img

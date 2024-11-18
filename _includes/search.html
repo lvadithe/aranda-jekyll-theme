@@ -1,42 +1,11 @@
-<head>
-	{% include head.html %}
-	{% include GA_Script.html %}
-</head>
+---
+layout: default
+title: Buscar
+---
 
-<body class="c-block-body search-page">
-	<header class="c-header">
-		<div class="g-container">
-			<div class="c-header__box">
-				<div class="c-header__col-1">
-					<div class="c-header__heading search-heading">
-						<div class="c-header__heading-icon iconfont-manuales"></div>
-						<div class="c-header__text">
-							<h1 class="c-header__text-1">Resultados de la búsqueda</h1>
-							<input
-								id="googleSearchBar"
-								class="google-search-bar"
-								type="text"
-								placeholder="Buscar"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<div class="searchBar">
-		<div class="gcse-search"></div>
-	</div>
-	{% include navbar.html %} {% include scripts.html %} {% include footer.html %}
-</body>
-<script async src="https://cse.google.com/cse.js?cx=d2fd2162130a04f3a"></script>
-<script>
-	var input = document.getElementById('googleSearchBar');
+<div class="search-container">
+  <input type="text" id="search-input" placeholder="Buscar..." oninput="search()">
+  <ul id="search-results"></ul>
+</div>
 
-	input.addEventListener('keypress', () => {
-		if (event.key === 'Enter' && input.value !== '') {
-			window.location = `/search.html#gsc.tab=0&gsc.sort=&gsc.q=${input.value}`;
-			event.preventDefault();
-		}
-	});
-</script>
+<script src="{{ '/assets/js/search.js' | relative_url }}"></script>

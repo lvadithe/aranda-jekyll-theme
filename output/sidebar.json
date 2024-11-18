@@ -1,0 +1,76 @@
+{
+  "test": [
+    {
+      "chapter": "chapter1-test",
+      "title": "Aranda Docs",
+      "pages": [
+        "test/index.md",
+        "test/configuration.md",
+        "test/content.md",
+        "test/sidebar.md"
+      ]
+    },
+    {
+      "chapter": "chapter2-test",
+      "title": "Otros Sitios",
+      "pages": [
+        {
+          "url": "./docs",
+          "title": "Ejemplo documentación"
+        },
+        {
+          "url": "https://www.google.com",
+          "title": "Google"
+        }
+      ]
+    }
+  ],
+  "docs": [
+    {
+      "chapter": "Chapter1",
+      "title": "Capítulo 1",
+      "pages": [
+        {
+          "page": "docs/multilevel/level2.md"
+        },
+        {
+          "chapter": "Chapter1.1",
+          "title": "Capítulo 1.1",
+          "pages": [
+            "docs/multilevel/level3.md",
+            {
+              "chapter": "Chapter1.1.1",
+              "title": "Capítulo 1.1.1",
+              "pages": [
+                "docs/multilevel/level4.md",
+                {
+                  "chapter": "Chapter1.1.1.1",
+                  "title": "Capítulo 1.1.1.1",
+                  "pages": [
+                    "docs/multilevel/level5.md"
+                  ]
+                },
+                "docs/instalacion/instalacion.md"
+              ]
+            },
+            "docs/instalacion/configuracion.md"
+          ]
+        },
+        {
+          "url": "https://github.com/aranda-docs/aranda-jekyll-theme",
+          "title": "Github"
+        },
+        "docs/instalacion/inicio.md"
+      ]
+    },
+    "docs/multilevel/level1.md",
+    {
+      "url": "https://www.arandasoft.com",
+      "title": "Página principal de Aranda"
+    },
+    {
+      "chapter": "Uso",
+      "title": "Uso"
+    }
+  ]
+}
