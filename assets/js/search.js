@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 resultsContainer.appendChild(pageItem);
 
                                 // Aquí es donde añadimos la lógica para obtener el título de la página .md generada en HTML
-                                const pageUrl = page.replace('_pages', '').replace('.md', '.html');  // Convertir _pages/.../.md a la ruta .html correspondiente
+                                const pageUrl = page.replace('_pages', '_site').replace('.md', '.html');  // Convertir _pages/.../.md a la ruta .html correspondiente
                                 console.log("p", pageUrl);
                                 // Asegurarse de que la URL esté en la forma correcta para ser accedida
                                 const fullPageUrl = `${window.location.origin}${pageUrl}`; // Usamos window.location.origin para obtener la URL completa
