@@ -48,6 +48,33 @@ document.addEventListener('DOMContentLoaded', function() {
                   const pageItem = document.createElement('li');
                   pageItem.textContent = page;  // Muestra la URL o archivo
                   resultsContainer.appendChild(pageItem);
+  
+                  // Aquí es donde añadimos la lógica para obtener el título de la página .md generada en HTML
+                  const pageUrl = page.replace('.md', '.html');  // Reemplazamos la extensión .md por .html
+  
+                  fetch(pageUrl)  // Usamos la URL que Jekyll genera, como /docs/configura_inicio/configuracion_preliminar.html
+                    .then(response => {
+                      if (response.ok) {
+                        return response.text();  // Obtener el contenido HTML
+                      }
+                      throw new Error('Error al cargar la página');
+                    })
+                    .then(html => {
+                      // Crear un DOM temporal para extraer el título de la página HTML
+                      const tempDiv = document.createElement('div');
+                      tempDiv.innerHTML = html;
+                      const pageTitle = tempDiv.querySelector('h1, title');  // Buscar el título de la página (en <h1> o <title>)
+                      if (pageTitle) {
+                        const pageTitleText = pageTitle.textContent || pageTitle.innerText;
+                        const pageLink = document.createElement('a');
+                        pageLink.href = pageUrl;  // Usar la URL procesada por Jekyll
+                        pageLink.textContent = `Ver: ${pageTitleText}`;  // Añadir el título de la página como un enlace
+                        resultsContainer.appendChild(pageLink);
+                      }
+                    })
+                    .catch(error => {
+                      console.error('Error cargando la página:', error);
+                    });
                 }
               }
             });
