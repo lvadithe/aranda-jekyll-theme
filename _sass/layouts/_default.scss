@@ -76,6 +76,7 @@ body#sg {
     height: 13px;
                 width: 13px;
 }
+
 .sg-pusher {
     position: relative;
     min-height: 100%;
@@ -371,20 +372,16 @@ body#sg {
     padding: 0 1px;
 }
 
-#contenido .body p>code {
+#contenido .body p > code {
     display: block;
     padding: 15px;
     white-space: pre;
 }
 .sg-main {
+    padding: 0;
     width: 100%;
     height: auto;
     min-height: calc(100vh - 30px);
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 20px;
-    margin-left: 285px;
 }
 .sg_contain {
     /*  problema padding */
